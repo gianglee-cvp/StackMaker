@@ -212,6 +212,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1260059009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1135123041
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1135123042}
+  m_Layer: 0
+  m_Name: WinPosContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1135123042
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135123041}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1260059009}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1260059007
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,11 +277,13 @@ MonoBehaviour:
   stackPrefab: {fileID: 8240867822069996032, guid: 0d855a1e096e83b48955a28cdff917b8, type: 3}
   cornerPrefab: {fileID: 3923869074761503765, guid: b3faf43521be2474289d1b57c7121c0a, type: 3}
   bridgePrefab: {fileID: 1765046182180127, guid: 3a322f3b56b32e346932b09fbc5dee96, type: 3}
+  winPosPrefab: {fileID: 1377060364527856, guid: 50c2fa3a6441d6144917cb20ab41fd98, type: 3}
   baseContainer: {fileID: 1964252441}
   wallContainer: {fileID: 1317141583}
   stackContainer: {fileID: 98056752}
   cornerContainer: {fileID: 874479626}
   bridgeContainer: {fileID: 284968498}
+  winPosContainer: {fileID: 1135123042}
 --- !u!4 &1260059009
 Transform:
   m_ObjectHideFlags: 0
@@ -269,6 +302,7 @@ Transform:
   - {fileID: 98056752}
   - {fileID: 874479626}
   - {fileID: 284968498}
+  - {fileID: 1135123042}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1317141582

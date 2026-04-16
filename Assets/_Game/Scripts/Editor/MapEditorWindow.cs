@@ -12,6 +12,7 @@ public class MapEditorWindow : EditorWindow
         Stack,
         Corner,
         Bridge,
+        WinPos, // Mới thêm: Cọ vẽ WinPos
         Z_Eraser_All
     }
 
@@ -24,29 +25,28 @@ public class MapEditorWindow : EditorWindow
         public CornerDirection cornerDir;
         public bool isBridge;
         public BridgeDirection bridgeDir;
+        public bool isWinPos;
 
         public void Clear()
         {
             isBase = false; isWall = false; isStack = false;
-            isCorner = false; isBridge = false;
+            isCorner = false; isBridge = false; isWinPos = false;
         }
 
         public bool IsEmpty()
         {
-            return !isBase && !isWall && !isStack && !isCorner && !isBridge;
+            return !isBase && !isWall && !isStack && !isCorner && !isBridge && !isWinPos;
         }
     }
 
     private string levelFilePath = "Assets/_Game/StreamingAssets/Levels/level1.json";
     
-    // Kích thước thật của map ghi vào JSON
     private int jsonRows = 100;
     private int jsonCols = 100;
 
-    // Viewport Camera (Chống Lag)
     private int viewCenterRow = 0;
     private int viewCenterCol = 0;
-    private int viewRadius = 12; // Vẽ 25x25 ô = 625 buttons = Cực mượt không lag!
+    private int viewRadius = 12;
 
     private Dictionary<Vector2Int, EditorCell> mapData = new Dictionary<Vector2Int, EditorCell>();
 
@@ -81,7 +81,6 @@ public class MapEditorWindow : EditorWindow
 
         DrawBrushMenu();
         
-        // --- CAMERA Panning để chống lag ---
         GUILayout.Space(10);
         GUILayout.Label("CAMERA (PAN MÀN HÌNH CHỐNG LAG)", EditorStyles.boldLabel);
         GUILayout.BeginHorizontal();
@@ -89,7 +88,7 @@ public class MapEditorWindow : EditorWindow
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("◀ Sang Trái")) viewCenterCol += 5; // Do flip 180 nên cộng trừ có thể đảo
+        if (GUILayout.Button("◀ Sang Trái")) viewCenterCol += 5;
         if (GUILayout.Button("Sang Phải ▶")) viewCenterCol -= 5;
         if (GUILayout.Button("▲ Lên Trên")) viewCenterRow += 5;
         if (GUILayout.Button("▼ Xuống Dưới")) viewCenterRow -= 5;
@@ -138,7 +137,6 @@ public class MapEditorWindow : EditorWindow
 
                 Rect rect = GUILayoutUtility.GetRect(40, 40);
                 
-                // Vẽ ô vuông thay cho Button
                 GUIStyle style = new GUIStyle(GUI.skin.button);
                 style.fontStyle = FontStyle.Bold;
                 GUI.Box(rect, cellText, style);
@@ -146,10 +144,10 @@ public class MapEditorWindow : EditorWindow
                 Event e = Event.current;
                 if ((e.type == EventType.MouseDown || e.type == EventType.MouseDrag) && rect.Contains(e.mousePosition))
                 {
-                    bool isErase = (e.button == 1); // 1 = Chuột phải
+                    bool isErase = (e.button == 1);
                     ApplyBrush(cell, isErase);
                     if (cell.IsEmpty()) mapData.Remove(pos);
-                    e.Use(); // Ăn event để vẽ mượt khi kéo
+                    e.Use();
                 }
             }
             GUILayout.EndHorizontal();
@@ -181,6 +179,7 @@ public class MapEditorWindow : EditorWindow
                 case PaintBrush.Stack: cell.isStack = false; break;
                 case PaintBrush.Corner: cell.isCorner = false; break;
                 case PaintBrush.Bridge: cell.isBridge = false; break;
+                case PaintBrush.WinPos: cell.isWinPos = false; break;
             }
         }
         else
@@ -192,6 +191,11 @@ public class MapEditorWindow : EditorWindow
                 case PaintBrush.Stack: cell.isStack = true; break;
                 case PaintBrush.Corner: cell.isCorner = true; cell.cornerDir = brushCornerDir; break;
                 case PaintBrush.Bridge: cell.isBridge = true; cell.bridgeDir = brushBridgeDir; break;
+                case PaintBrush.WinPos: 
+                    // Chức năng đặc biệt: Xoá WinPos ở những vị trí cũ vì chỉ có 1 WinPos suy nhất
+                    foreach (var c in mapData.Values) c.isWinPos = false;
+                    cell.isWinPos = true; 
+                    break;
             }
         }
     }
@@ -199,6 +203,7 @@ public class MapEditorWindow : EditorWindow
     private string GetCellDisplayString(EditorCell cell)
     {
         string t = "";
+        if (cell.isWinPos) t += "WIN\n";
         if (cell.isBase) t += "B\n";
         if (cell.isWall) t += "W\n";
         if (cell.isStack) t += "S\n";
@@ -211,8 +216,10 @@ public class MapEditorWindow : EditorWindow
     {
         if (r == 0 && c == 0 && cell.IsEmpty()) return Color.black; 
         if (cell.IsEmpty()) return new Color(0.8f, 0.8f, 0.8f);
+        
+        if (cell.isWinPos) return Color.magenta;    // WinPos sẽ có màu hồng tím chói sáng nhất 
         if (cell.isBridge) return Color.cyan;
-        if (cell.isCorner) return new Color(1f, 0.5f, 0f);
+        if (cell.isCorner) return new Color(1f, 0.5f, 0f); // Cam
         if (cell.isStack) return Color.blue;
         if (cell.isWall) return Color.red;
         if (cell.isBase) return Color.green;
@@ -241,6 +248,15 @@ public class MapEditorWindow : EditorWindow
         if (l.bridgeData != null) foreach(var d in l.bridgeData) {
             var cell = GetCell(new Vector2Int(d.row, d.column)); cell.isBridge = true; cell.bridgeDir = d.direction;
         }
+        
+        if (l.winPos != null)
+        {
+            // Kiểm tra nếu WinPos rỗng thì toạ độ bằng 0,0 do Json mặc định. Ta dùng -999 để đánh dấu rỗng.
+            if (l.winPos.row != -999 && l.winPos.column != -999)
+            {
+                GetCell(new Vector2Int(l.winPos.row, l.winPos.column)).isWinPos = true;
+            }
+        }
     }
 
     private void SaveMap()
@@ -260,6 +276,8 @@ public class MapEditorWindow : EditorWindow
         wrapper.level.baseData.Clear(); wrapper.level.wallData.Clear();
         wrapper.level.stackData.Clear(); wrapper.level.cornerData.Clear(); wrapper.level.bridgeData.Clear();
 
+        bool foundWinPos = false;
+
         foreach (var kvp in mapData)
         {
             int r = kvp.Key.x; int c = kvp.Key.y; EditorCell cell = kvp.Value;
@@ -268,6 +286,20 @@ public class MapEditorWindow : EditorWindow
             if (cell.isStack) wrapper.level.stackData.Add(new StackData { row = r, column = c });
             if (cell.isCorner) wrapper.level.cornerData.Add(new CornerData { row = r, column = c, direction = cell.cornerDir });
             if (cell.isBridge) wrapper.level.bridgeData.Add(new BridgeData { row = r, column = c, direction = cell.bridgeDir });
+            
+            if (cell.isWinPos)
+            {
+                wrapper.level.winPos.row = r;
+                wrapper.level.winPos.column = c;
+                foundWinPos = true;
+            }
+        }
+
+        // Nếu ko có vẽ WinPos nào, ghi -999 để ko sinh ra cục WinPos rác ở 0,0
+        if (!foundWinPos)
+        {
+            wrapper.level.winPos.row = -999;
+            wrapper.level.winPos.column = -999;
         }
 
         File.WriteAllText(levelFilePath, JsonUtility.ToJson(wrapper, true));

@@ -12,6 +12,7 @@ public partial class MapManager : MonoBehaviour
     [SerializeField] private GameObject stackPrefab ;
     [SerializeField] private GameObject cornerPrefab ;
     [SerializeField] private GameObject bridgePrefab ;
+    [SerializeField] private GameObject winPosPrefab ;
 
     [Header("Containers")]
     [SerializeField] private Transform baseContainer ;
@@ -20,9 +21,11 @@ public partial class MapManager : MonoBehaviour
 
     [SerializeField] private Transform cornerContainer ;
     [SerializeField] private Transform bridgeContainer ;
+    [SerializeField] private Transform winPosContainer ;
    // [SerializeField] private List<GameObject> baseList = new List<GameObject>() ;
 
     private LevelData currentLevelData ;
+    
     void OnAwake()
     {
      //    List<BaseData> baseDataList = new List<BaseData>();
@@ -44,6 +47,7 @@ public partial class MapManager : MonoBehaviour
             GenStack();
             GenCorner();
             GenBridge();
+            GenWinPos();
         }
     }
     private void GenBase()
@@ -109,6 +113,15 @@ public partial class MapManager : MonoBehaviour
                 float angle = (int)bridgeData.direction * 90f; // Horizontal -> 0, Vertical -> 90
                 Instantiate(bridgePrefab, new Vector3(bridgeData.row, 2.5f, bridgeData.column), Quaternion.Euler(-90, 0, angle), bridgeContainer);
             }
+        }
+    }
+    private void GenWinPos()
+    {
+        if(currentLevelData == null || currentLevelData.winPos.row == -999) return ;
+        else
+        {
+            Debug.Log("GenWinPos");
+            Instantiate(winPosPrefab, new Vector3(currentLevelData.winPos.row, 0, currentLevelData.winPos.column), Quaternion.Euler(currentLevelData.winPosRotation) , winPosContainer);
         }
     }
 }

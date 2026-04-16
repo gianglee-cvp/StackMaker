@@ -1,5 +1,10 @@
 {
     "level": {
+        "startPos": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 3.0
+        },
         "rows": 100,
         "columns": 100,
         "baseRotation": {
@@ -16,6 +21,11 @@
             "x": -90.0,
             "y": 0.0,
             "z": -180.0
+        },
+        "winPosRotation": {
+            "x": 0.0,
+            "y": 90.0,
+            "z": 0.0
         },
         "baseData": [
             {
@@ -2513,6 +2523,10 @@
                 "column": -46,
                 "direction": 1
             }
-        ]
+        ],
+        "winPos": {
+            "row": 35,
+            "column": -46
+        }
     }
 }
