@@ -307,7 +307,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1665665691852194, guid: 70341cb846258324cb775e30d11048f0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1304890943}
   m_SourcePrefab: {fileID: 100100000, guid: 70341cb846258324cb775e30d11048f0, type: 3}
 --- !u!1 &1135123041
 GameObject:
@@ -402,6 +405,23 @@ Transform:
   - {fileID: 1135123042}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1304890939 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1665665691852194, guid: 70341cb846258324cb775e30d11048f0, type: 3}
+  m_PrefabInstance: {fileID: 938318825}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1304890943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304890939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46ca88d85f8987b47a19668868db7eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1317141582
 GameObject:
   m_ObjectHideFlags: 0
@@ -442,8 +462,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1428312459}
+  - component: {fileID: 1428312460}
   m_Layer: 0
-  m_Name: GamePlayManager
+  m_Name: ----------------GamePlayManager-------------------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,6 +485,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1428312460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1428312458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4abaf066f13f8143b082c09e61c0300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapManager: {fileID: 1260059008}
+  player: {fileID: 1304890943}
 --- !u!1 &1563332776
 GameObject:
   m_ObjectHideFlags: 0
