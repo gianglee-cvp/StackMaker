@@ -13,6 +13,8 @@ public class StackManager : MonoBehaviour
     public List<GameObject> stackList = new List<GameObject>();    
     public int stackCount ; 
     public MoveDirection curMoveDirectionHitCorner = MoveDirection.None ; 
+
+    [SerializeField] private Animator playerAnimator ;
     public void Oninit()
     {
             stackList.Clear();
@@ -59,6 +61,9 @@ public class StackManager : MonoBehaviour
             PlayerController.Instance.hitCorner = true;
             Corner corner = other.gameObject.GetComponent<Corner>();
             Debug.Log("PlayerController.Instance.curMoveDirection: " + PlayerController.Instance.curMoveDirection);
+            
+            playerAnimator.SetInteger("renwu" , 1);  
+
             if(PlayerController.Instance.curMoveDirection == MoveDirection.Up || PlayerController.Instance.curMoveDirection == MoveDirection.Down){
                 curMoveDirectionHitCorner = corner.mustMoveHorizontal;
             }
@@ -78,7 +83,7 @@ public class StackManager : MonoBehaviour
             other.gameObject.GetComponent<Collider>().enabled = false; // Vô hiệu hóa collider của cầu đã sử dụng
             playerBody.localPosition -= new UnityEngine.Vector3(0 , stackHeight , 0) ;
 
-            
+
              // Cập nhật mốc Camera khi số lượng gạch thay đổi
             if (CameraFollow.Instance != null)
             {
@@ -90,5 +95,11 @@ public class StackManager : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
+        if(other.gameObject.CompareTag("Corner"))
+        {
+            playerAnimator.SetInteger("renwu" , 0);
+        }
+
+
     }
 }

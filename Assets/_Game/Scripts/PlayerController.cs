@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
         if(Physics.Raycast(detechWallPoint.position,dir, out RaycastHit hit, 50f , wallLayer)){
             distance = Mathf.FloorToInt(Vector3.Distance(hit.point, detechWallPoint.position));
         }
-        transform.DOMove(transform.position + dir * distance, 0.08f * distance)
+        transform.DOMove(transform.position + dir * distance, 0.09f * distance)
         .SetEase(Ease.InOutQuad)
         .OnUpdate(()=>{
             Debug.Log("Player is Sliding...");
