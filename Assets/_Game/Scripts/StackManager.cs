@@ -85,7 +85,7 @@ public class StackManager : MonoBehaviour
             stackList.RemoveAt(stackCount - 1);
             stackCount--;
 
-            other.gameObject.GetComponent<Collider>().enabled = false; // Vô hiệu hóa collider của cầu đã sử dụng
+         //   other.gameObject.GetComponent<Collider>().enabled = false; // Vô hiệu hóa collider của cầu đã sử dụng
             playerBody.localPosition -= new UnityEngine.Vector3(0 , stackHeight , 0) ;
 
 
@@ -106,6 +106,10 @@ public class StackManager : MonoBehaviour
         if(other.gameObject.CompareTag("Corner"))
         {
             playerAnimator.SetInteger("renwu" , 0);
+        }
+        if (other.gameObject.CompareTag("Bridge"))
+        {
+            other.gameObject.GetComponent<Bridge>().SetColor(); // Kích hoạt lại collider của cầu khi rời khỏi
         }
 
 

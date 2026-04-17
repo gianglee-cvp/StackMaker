@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private StackManager stackManager;
+    [SerializeField] private UIManager uiManager;
     
     public static GameManager Instance { get; private set; }
     public void OnInit(){
@@ -28,6 +29,16 @@ public class GameManager : MonoBehaviour
         
     }
     public void OnWin(){
+        uiManager.winPanel.SetActive(true);
+        return ;
+    }
+    public void OnDeath(){
+        uiManager.deathPanel.SetActive(true);
+        return ;
+    }
+    public void RestartButton(){
+        uiManager.winPanel.SetActive(false);
+        uiManager.deathPanel.SetActive(false);
         mapManager.OnEnd();
         OnInit();
     }

@@ -77,7 +77,7 @@ public class CameraFollow : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(activeConfig.rotationOffset);
 
         // 2. Di chuyển Camera siêu mượt bằng Lerp
-        float smoothSpeed = 5f * Time.deltaTime;
+        float smoothSpeed = 8f * Time.deltaTime;
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, smoothSpeed);
     }
