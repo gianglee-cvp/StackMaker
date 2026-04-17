@@ -66,6 +66,19 @@ public class StackManager : MonoBehaviour
                 curMoveDirectionHitCorner = corner.mustMoveVertical;
             }
         }
+        else if (other.gameObject.CompareTag("Bridge"))
+        {
+            Destroy(stackList[stackCount- 1]);
+            stackList.RemoveAt(stackCount - 1);
+            stackCount--;
+            playerBody.localPosition -= new UnityEngine.Vector3(0 , stackHeight , 0) ;
+             // Cập nhật mốc Camera khi số lượng gạch thay đổi
+            if (CameraFollow.Instance != null)
+            {
+                CameraFollow.Instance.UpdateCameraMilestone(stackCount);
+            }
+
+        }
         
     }
     void OnTriggerExit(Collider other)

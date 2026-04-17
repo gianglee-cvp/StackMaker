@@ -2,6 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DG.Tweening;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
@@ -93,6 +94,7 @@ public class PlayerController : MonoBehaviour
         .SetEase(Ease.InOutQuad)
         .OnUpdate(()=>{
             Debug.Log("Player is Sliding...");
+            if(StackManager.Instance.stackCount == 0) transform.DOKill(); // Nếu không còn stack nào thì dừng tween để tránh lỗi khi player vẫn đang di chuyển nhưng đã hết stack
         })
         .OnComplete(()=>{
             if(hitCorner){
