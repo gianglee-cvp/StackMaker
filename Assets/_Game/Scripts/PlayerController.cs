@@ -13,8 +13,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform detechWallPoint ; 
     [SerializeField] private LayerMask wallLayer;
     public bool hitCorner = false ;
+    public bool hitWinPos = false ;
     public void OnInit(Vector3 startPos){
         transform.position = startPos;
+        isSliding = false;
+        curMoveDirection = MoveDirection.None;
+        hitCorner = false;
+        hitWinPos = false;
     }
     void OnEnable()
     {
@@ -100,6 +105,11 @@ public class PlayerController : MonoBehaviour
             if(hitCorner){
                 hitCorner = false;
                 PlayerMove(StackManager.Instance.curMoveDirectionHitCorner);
+            }
+            else if(hitWinPos)
+            {
+                Debug.Log("Player reached Win Position!");
+                GameManager.Instance.OnWin(); // Reset game when player reaches win position
             }
             else
             {

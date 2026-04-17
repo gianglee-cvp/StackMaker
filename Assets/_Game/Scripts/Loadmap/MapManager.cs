@@ -53,4 +53,25 @@ public partial class MapManager : MonoBehaviour
     public Vector3 GetStartPos(){
         return currentLevelData.startPos;
     }
+    public void OnEnd()
+    {
+        foreach(Transform child in baseContainer){
+            Destroy(child.gameObject);
+        }
+        foreach(Transform child in wallContainer){
+            Destroy(child.gameObject);
+        }
+        foreach(Transform child in stackContainer){
+            Destroy(child.gameObject);
+        }
+        foreach(Transform child in cornerContainer){
+            Destroy(child.gameObject);
+        }
+        foreach(Transform child in bridgeContainer){
+            Destroy(child.gameObject);
+        }
+        foreach(Transform child in winPosContainer){
+            Destroy(child.gameObject);
+        }
+    }
 }

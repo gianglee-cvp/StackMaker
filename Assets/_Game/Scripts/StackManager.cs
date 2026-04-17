@@ -17,8 +17,13 @@ public class StackManager : MonoBehaviour
     [SerializeField] private Animator playerAnimator ;
     public void Oninit()
     {
+            foreach(GameObject stack in stackList){
+                Destroy(stack);
+            }
             stackList.Clear();
             stackCount = 0 ;
+            playerBody.localPosition = UnityEngine.Vector3.zero;
+             // Cập nhật mốc Camera khi số lượng gạch thay đổi
     }
     void Awake()
     {
@@ -90,6 +95,9 @@ public class StackManager : MonoBehaviour
                 CameraFollow.Instance.UpdateCameraMilestone(stackCount);
             }
 
+        }
+        else if(other.gameObject.CompareTag("WinPos")){
+            PlayerController.Instance.hitWinPos = true;
         }
         
     }

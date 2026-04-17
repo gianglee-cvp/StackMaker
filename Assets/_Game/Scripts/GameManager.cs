@@ -8,8 +8,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PlayerController player;
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private StackManager stackManager;
-
-    void OnInit(){
+    
+    public static GameManager Instance { get; private set; }
+    public void OnInit(){
         mapManager.OnInit();
         player.OnInit(mapManager.GetStartPos());
         stackManager.Oninit();
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     }
     void Awake()
     {
+        Instance = this;
         OnInit();
     }
 
@@ -24,5 +26,9 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+    public void OnWin(){
+        mapManager.OnEnd();
+        OnInit();
     }
 }
