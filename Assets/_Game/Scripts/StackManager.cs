@@ -1,16 +1,24 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Numerics;
 using UnityEngine;
 
 public class StackManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private static StackManager Instance;
+    public static StackManager Instance;
     public Transform stackHolder; // đối tượng cha chứa tất cả stack
     public Transform playerBody  ; 
     public float stackHeight = 0.5f ; 
     public List<GameObject> stackList = new List<GameObject>();    
-    public int stackCount => stackList.Count;
+    public int stackCount ; 
+    public MoveDirection curMoveDirectionHitCorner = MoveDirection.None ; 
+
+    public void Oninit()
+    {
+            stackList.Clear();
+            stackCount = 0 ;
+    }
     void Awake()
     {
         if(Instance == null){
@@ -36,12 +44,31 @@ public class StackManager : MonoBehaviour
         if(other.gameObject.CompareTag("Stack")){
             stackList.Add(other.gameObject);
             other.transform.SetParent(stackHolder);
-            other.transform.localPosition = new UnityEngine.Vector3(0 , stackHeight * (stackList.Count - 1)- 0.5f , 0) ;  
+            other.transform.localPosition = new UnityEngine.Vector3(0 , stackHeight * stackCount - 0.5f , 0) ;  
             playerBody.localPosition += new UnityEngine.Vector3(0 , stackHeight , 0) ;
+            stackCount++;
+            
+            // Cập nhật mốc Camera khi số lượng gạch thay đổi
+            if (CameraFollow.Instance != null)
+            {
+                CameraFollow.Instance.UpdateCameraMilestone(stackCount);
+            }
         }
+        else if (other.gameObject.CompareTag("Corner"))
+        {
+            PlayerController.Instance.hitCorner = true;
+            Corner corner = other.gameObject.GetComponent<Corner>();
+            Debug.Log("PlayerController.Instance.curMoveDirection: " + PlayerController.Instance.curMoveDirection);
+            if(PlayerController.Instance.curMoveDirection == MoveDirection.Up || PlayerController.Instance.curMoveDirection == MoveDirection.Down){
+                curMoveDirectionHitCorner = corner.mustMoveHorizontal;
+            }
+            else if(PlayerController.Instance.curMoveDirection == MoveDirection.Left || PlayerController.Instance.curMoveDirection == MoveDirection.Right){
+                curMoveDirectionHitCorner = corner.mustMoveVertical;
+            }
+        }
+        
     }
     void OnTriggerExit(Collider other)
     {
-        
     }
 }

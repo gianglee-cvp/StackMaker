@@ -1,35 +1,84 @@
+using System;
 using UnityEngine;
+
+[Serializable]
+public struct CameraOffsetConfigByStackCount
+{
+    public int stackThreshold;    // Mốc số gạch (Ví dụ: 10, 20, 30)
+    public Vector3 offset;        // Khoảng cách Camera
+    public Vector3 rotationOffset; // Góc xoay Camera
+}
 
 public class CameraFollow : MonoBehaviour
 {
-    public Transform target; // The target the camera will follow
-    public float smoothSpeed = 0.125f; // The speed of the camera's movement
-    public Vector3 offset; // The offset from the target's position
-    public Vector3 rotationOffset; // The offset for the camera's rotation
+    public static CameraFollow Instance; // Singleton để gọi từ StackManager dễ dàng
 
-    public void OnInit()
+    public Transform target; // Kéo vật thể PlayerRoot vào đây
+
+    [Header("Cấu hình các mốc Camera")]
+    public CameraOffsetConfigByStackCount[] cameraConfigs; 
+
+    private CameraOffsetConfigByStackCount activeConfig;
+
+    void Awake()
     {
-        if (target == null)
+        if (Instance == null)
         {
-            Debug.LogError("CameraFollow: No target assigned. Please assign a target for the camera to follow.");
+            Instance = this;
         }
         else
         {
-            // Initialize the camera's position and rotation based on the target and offsets
-            transform.position = target.position + offset;
-            transform.rotation = Quaternion.Euler(rotationOffset);
+            Destroy(gameObject);
         }
     }
+
+    public void OnInit()
+    {
+        if (cameraConfigs != null && cameraConfigs.Length > 0)
+        {
+            activeConfig = cameraConfigs[0];
+        }
+        if (target == null)
+        {
+            Debug.LogError("CameraFollow: No target assigned.");
+        }
+        transform.position = target.position + activeConfig.offset;
+        transform.rotation = Quaternion.Euler(activeConfig.rotationOffset);
+    }
+
+    void Start()
+    {
+        // Gán mốc mặc định ban đầu (Mốc 0)
+
+    }
+
+    // Hàm này sẽ được gọi mỗi khi Player ăn hoặc rớt gạch
+    public void UpdateCameraMilestone(int currentStackCount)
+    {
+        if (cameraConfigs == null) return;
+        
+        // Duyệt qua tất cả các mốc bạn đã tạo
+        foreach (var config in cameraConfigs)
+        {
+            // Nếu số gạch hiện tại VƯỢT QUA hoặc BẰNG mốc này
+            if (currentStackCount >= config.stackThreshold)
+            {
+                activeConfig = config; 
+            }
+        }
+    }
+
     void LateUpdate()
     {
-        if (target != null)
-        {
-            Vector3 desiredPosition = target.position + offset; // Calculate the desired position
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed); // Smoothly interpolate to the desired position
-            transform.position = smoothedPosition; // Update the camera's position
+        if (target == null) return;
 
-            Quaternion desiredRotation = Quaternion.Euler(rotationOffset); // Calculate the desired rotation
-            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, smoothSpeed); // Smoothly interpolate to the desired rotation
-        }
+        // 1. Tính toán vị trí đích đến của Camera
+        Vector3 targetPosition = target.position + activeConfig.offset;
+        Quaternion targetRotation = Quaternion.Euler(activeConfig.rotationOffset);
+
+        // 2. Di chuyển Camera siêu mượt bằng Lerp
+        float smoothSpeed = 5f * Time.deltaTime;
+        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, smoothSpeed);
     }
 }

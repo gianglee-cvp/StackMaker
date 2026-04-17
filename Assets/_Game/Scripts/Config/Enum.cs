@@ -1,4 +1,6 @@
-using UnityEngine;
+
+using System.Numerics;
+
 public enum CornerDirection
 {
     UpLeft,     // 0 -> Góc 0

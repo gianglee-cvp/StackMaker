@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -6,10 +7,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MapManager mapManager;
     [SerializeField] private PlayerController player;
     [SerializeField] private CameraFollow cameraFollow;
+    [SerializeField] private StackManager stackManager;
 
     void OnInit(){
         mapManager.OnInit();
         player.OnInit(mapManager.GetStartPos());
+        stackManager.Oninit();
         cameraFollow.OnInit();
     }
     void Awake()

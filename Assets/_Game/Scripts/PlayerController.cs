@@ -6,11 +6,12 @@ using DG.Tweening;
 public class PlayerController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private static PlayerController Instance;
+    public static PlayerController Instance;
     public bool isSliding = false;
-    private MoveDirection curMoveDirection = MoveDirection.None;
+    public MoveDirection curMoveDirection = MoveDirection.None;
     [SerializeField] private Transform detechWallPoint ; 
     [SerializeField] private LayerMask wallLayer;
+    public bool hitCorner = false ;
     public void OnInit(Vector3 startPos){
         transform.position = startPos;
     }
@@ -60,10 +61,11 @@ public class PlayerController : MonoBehaviour
     }
 
     void PlayerMove(MoveDirection moveDirection){
-        Debug.Log("Player Move: " + moveDirection);
+    //    Debug.Log("Player Move: " + moveDirection);
         isSliding = true;
         Vector3 dir = Vector3.zero;
-        Debug.Log("Current Move Direction: " + curMoveDirection);
+        curMoveDirection = moveDirection;
+       // Debug.Log("Current Move Direction: " + curMoveDirection);
         if(curMoveDirection == MoveDirection.None) return ;
         switch (curMoveDirection)
         {
@@ -80,12 +82,10 @@ public class PlayerController : MonoBehaviour
             dir = Vector3.left;
             break;
         }
-        //Debug.Log("Player Move Direction: " + dir);
-        //Debug.DrawRay(detechWallPoint.position, dir * 50f, Color.red , 999f);
 
 
         int distance = 0 ; 
-
+      //  Debug.DrawRay(detechWallPoint.position, dir * 50f, Color.red , 999f);
         if(Physics.Raycast(detechWallPoint.position,dir, out RaycastHit hit, 50f , wallLayer)){
             distance = Mathf.FloorToInt(Vector3.Distance(hit.point, detechWallPoint.position));
         }
@@ -95,10 +95,18 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player is Sliding...");
         })
         .OnComplete(()=>{
-            Debug.Log("Player Slide Complete");
-            isSliding = false;
+            if(hitCorner){
+                hitCorner = false;
+                PlayerMove(StackManager.Instance.curMoveDirectionHitCorner);
+            }
+            else
+            {
+                isSliding = false;
+                curMoveDirection = MoveDirection.None;
+            }
+            
         });
-        curMoveDirection = MoveDirection.None;
+        
     }
     void AddBrick()
     {
