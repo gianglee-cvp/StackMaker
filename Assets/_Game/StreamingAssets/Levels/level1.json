@@ -98,10 +98,6 @@
             },
             {
                 "row": 2,
-                "column": 3
-            },
-            {
-                "row": 2,
                 "column": 4
             },
             {
@@ -1119,6 +1115,10 @@
             {
                 "row": 16,
                 "column": -47
+            },
+            {
+                "row": 2,
+                "column": 3
             }
         ],
         "wallData": [
@@ -1224,10 +1224,6 @@
             },
             {
                 "row": 4,
-                "column": 3
-            },
-            {
-                "row": 4,
                 "column": 6
             },
             {
@@ -1273,10 +1269,6 @@
             {
                 "row": 7,
                 "column": 2
-            },
-            {
-                "row": 7,
-                "column": 5
             },
             {
                 "row": 7,
@@ -1881,10 +1873,6 @@
                 "column": 3
             },
             {
-                "row": 2,
-                "column": 3
-            },
-            {
                 "row": 3,
                 "column": 1
             },
@@ -2223,6 +2211,10 @@
             {
                 "row": 22,
                 "column": -46
+            },
+            {
+                "row": 2,
+                "column": 3
             }
         ],
         "cornerData": [
