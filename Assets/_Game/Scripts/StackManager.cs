@@ -13,7 +13,6 @@ public class StackManager : MonoBehaviour
     public List<GameObject> stackList = new List<GameObject>();    
     public int stackCount ; 
     public MoveDirection curMoveDirectionHitCorner = MoveDirection.None ; 
-
     public void Oninit()
     {
             stackList.Clear();
@@ -47,6 +46,7 @@ public class StackManager : MonoBehaviour
             other.transform.localPosition = new UnityEngine.Vector3(0 , stackHeight * stackCount - 0.5f , 0) ;  
             playerBody.localPosition += new UnityEngine.Vector3(0 , stackHeight , 0) ;
             stackCount++;
+            other.gameObject.GetComponent<Collider>().enabled = false; // Vô hiệu hóa collider của gạch đã thu thập
             
             // Cập nhật mốc Camera khi số lượng gạch thay đổi
             if (CameraFollow.Instance != null)
@@ -68,10 +68,17 @@ public class StackManager : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Bridge"))
         {
+           // Debug.Log("Player hit Bridge, removing one stack...");
+            if(stackCount == 0) return ; // Nếu không còn stack nào thì không làm gì cả
+
             Destroy(stackList[stackCount- 1]);
             stackList.RemoveAt(stackCount - 1);
             stackCount--;
+
+            other.gameObject.GetComponent<Collider>().enabled = false; // Vô hiệu hóa collider của cầu đã sử dụng
             playerBody.localPosition -= new UnityEngine.Vector3(0 , stackHeight , 0) ;
+
+            
              // Cập nhật mốc Camera khi số lượng gạch thay đổi
             if (CameraFollow.Instance != null)
             {

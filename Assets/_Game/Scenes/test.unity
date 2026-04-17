@@ -374,10 +374,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSliding: 0
+  curMoveDirection: 0
   detechWallPoint: {fileID: 1435515224}
   wallLayer:
     serializedVersion: 2
     m_Bits: 8
+  hitCorner: 0
 --- !u!114 &1304890946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,6 +397,7 @@ MonoBehaviour:
   stackHeight: 0.3
   stackList: []
   stackCount: 0
+  curMoveDirectionHitCorner: 0
 --- !u!1 &1317141582
 GameObject:
   m_ObjectHideFlags: 0
@@ -1234,7 +1237,7 @@ GameObject:
   - component: {fileID: 1304890946}
   m_Layer: 0
   m_Name: people
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1332,7 +1335,7 @@ GameObject:
   - component: {fileID: 125109661}
   m_Layer: 0
   m_Name: RootCollider
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
