@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
         
     }
     public void OnWin(){
+        mapManager.PlayWinEffect();
         uiManager.winPanel.SetActive(true);
         return ;
     }

@@ -74,4 +74,7 @@ public partial class MapManager : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
+    public void PlayWinEffect(){
+        winPosContainer.GetComponent<ParticleSystem>().Play();
+    }
 }

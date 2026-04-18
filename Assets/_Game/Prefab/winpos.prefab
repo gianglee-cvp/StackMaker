@@ -22453,6 +22453,7 @@ GameObject:
   - component: {fileID: 4157892317022374}
   - component: {fileID: 4024996338834895775}
   - component: {fileID: 5541430151455063771}
+  - component: {fileID: 1033541125585672280}
   m_Layer: 0
   m_Name: winpos
   m_TagString: Untagged
@@ -27343,6 +27344,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1033541125585672280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377060364527856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83c819303b6be7b439d226034de93e4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winEffect: {fileID: 0}
 --- !u!1 &1382597685722805
 GameObject:
   m_ObjectHideFlags: 0
@@ -54456,7 +54470,7 @@ Transform:
   m_GameObject: {fileID: 8808633879596070166}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.101, z: 5}
+  m_LocalPosition: {x: 0, y: 3.101, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
