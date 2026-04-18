@@ -30,3 +30,5 @@ Syscache/
 
 # Ignore AI Prompt Rule
 commit_rules.md
+Assets/_Game/Scripts/Editor/MapEditorWindow.cs
+Assets/_Game/Scripts/Editor/MapEditorWindow.cs.meta

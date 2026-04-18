@@ -38,7 +38,7 @@ public partial class MapManager : MonoBehaviour
 
     public void OnInit()
     {
-        currentLevelData = LevelLoader.LoadLevel("Assets/_Game/StreamingAssets/Levels/level1.json");
+        //currentLevelData = LevelLoader.LoadLevel("Assets/_Game/StreamingAssets/Levels/level2.json");
         if(currentLevelData == null) return ;
         else
         {
@@ -76,5 +76,8 @@ public partial class MapManager : MonoBehaviour
     }
     public void PlayWinEffect(){
         winPosContainer.GetComponent<ParticleSystem>().Play();
+    }
+    public void SetLevel(int level){
+        currentLevelData = LevelLoader.LoadLevel("Assets/_Game/StreamingAssets/Levels/level" + level + ".json");
     }
 }
