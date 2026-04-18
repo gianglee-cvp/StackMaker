@@ -11,7 +11,6 @@ public struct CameraOffsetConfigByStackCount
 
 public class CameraFollow : MonoBehaviour
 {
-    public static CameraFollow Instance; // Singleton để gọi từ StackManager dễ dàng
 
     public Transform target; // Kéo vật thể PlayerRoot vào đây
 
@@ -19,18 +18,6 @@ public class CameraFollow : MonoBehaviour
     public CameraOffsetConfigByStackCount[] cameraConfigs; 
 
     private CameraOffsetConfigByStackCount activeConfig;
-
-    void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     public void OnInit()
     {
@@ -46,11 +33,6 @@ public class CameraFollow : MonoBehaviour
         transform.rotation = Quaternion.Euler(activeConfig.rotationOffset);
     }
 
-    void Start()
-    {
-        // Gán mốc mặc định ban đầu (Mốc 0)
-
-    }
 
     // Hàm này sẽ được gọi mỗi khi Player ăn hoặc rớt gạch
     public void UpdateCameraMilestone(int currentStackCount)

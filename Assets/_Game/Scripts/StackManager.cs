@@ -6,6 +6,8 @@ using UnityEngine;
 public class StackManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [SerializeField] CameraFollow cameraFollow; // Kéo Camera vào đây để gọi hàm cập nhật mốc khi số lượng gạch thay đổi
     public static StackManager Instance;
     public Transform stackHolder; // đối tượng cha chứa tất cả stack
     public Transform playerBody  ; 
@@ -15,7 +17,7 @@ public class StackManager : MonoBehaviour
     public MoveDirection curMoveDirectionHitCorner = MoveDirection.None ; 
 
     [SerializeField] private Animator playerAnimator ;
-    public void Oninit()
+    public void OnInit()
     {
             RemoveAllStack();
             playerAnimator.SetInteger("renwu" , 0); // Đặt lại animation về trạng thái ban đầu
@@ -53,9 +55,9 @@ public class StackManager : MonoBehaviour
             other.gameObject.GetComponent<Collider>().enabled = false; // Vô hiệu hóa collider của gạch đã thu thập
             
             // Cập nhật mốc Camera khi số lượng gạch thay đổi
-            if (CameraFollow.Instance != null)
+            if (cameraFollow != null)
             {
-                CameraFollow.Instance.UpdateCameraMilestone(stackCount);
+                cameraFollow.UpdateCameraMilestone(stackCount);
             }
         }
         else if (other.gameObject.CompareTag("Corner"))
@@ -82,18 +84,26 @@ public class StackManager : MonoBehaviour
             stackList.RemoveAt(stackCount - 1);
             stackCount--;
 
-            playerBody.localPosition -= new UnityEngine.Vector3(0 , stackHeight , 0) ;
+            playerBody.localPosition -= new Vector3(0 , stackHeight , 0) ;
+
+            if(stackCount == 0)
+            {
+                GameManager.Instance.OnDeath(); 
+            }
 
 
              // Cập nhật mốc Camera khi số lượng gạch thay đổi
-            if (CameraFollow.Instance != null)
+            if (cameraFollow != null)
             {
-                CameraFollow.Instance.UpdateCameraMilestone(stackCount);
+                cameraFollow.UpdateCameraMilestone(stackCount);
             }
 
         }
         else if(other.gameObject.CompareTag("WinPos")){
             PlayerController.Instance.hitWinPos = true;
+
+            GameManager.Instance.Point = stackCount; // Cập nhật điểm khi đến vị trí chiến thắng
+            WinPosManager.Instance.PlayWinEffect(); // Phát hiệu ứng chiến thắng
 
             RemoveAllStack();
 
