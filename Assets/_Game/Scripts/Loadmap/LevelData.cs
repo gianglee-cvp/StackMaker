@@ -40,6 +40,12 @@ public class WinPos
     public int column ; 
 }
 [System.Serializable]
+public class GemsData
+{
+    public int row ;
+    public int column ;
+}
+[System.Serializable]
 public class LevelData 
 {
     public Vector3 startPos ;
@@ -55,6 +61,7 @@ public class LevelData
     public List<CornerData> cornerData = new List<CornerData>() ;
     public List<BridgeData> bridgeData = new List<BridgeData>() ;
     public WinPos winPos = new WinPos() ;
+    public List<GemsData> gemsData = new List<GemsData>() ;
 }
 [System.Serializable]
 public class LevelDataWrapper

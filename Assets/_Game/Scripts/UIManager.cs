@@ -17,5 +17,13 @@ public class UIManager : MonoBehaviour
     {
         stackCountText.text = "Stack: " + count.ToString();
     }
-    
+    public void UpdateStackSpriteMode(int count)
+    {
+        string scoreString =   count.ToString();
+        stackCountText.text = "Stack: " ;
+        foreach(char digit in scoreString)
+        {
+            stackCountText.text += $"<sprite name=\"{digit}\">";
+        }
+    }
 }

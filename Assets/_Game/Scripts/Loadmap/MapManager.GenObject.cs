@@ -79,4 +79,16 @@ public partial class MapManager : MonoBehaviour
             Instantiate(winPosPrefab, new Vector3(currentLevelData.winPos.row, 0, currentLevelData.winPos.column), Quaternion.Euler(currentLevelData.winPosRotation) , winPosContainer);
         }
     }
+    private void GenGems()
+    {
+        if(currentLevelData == null) return ;
+        else
+        {
+            foreach( var gemsData in currentLevelData.gemsData)
+            {
+                //  Debug.Log("StackData: Row: " + stackData.row + " Column: " + stackData.column);
+                Instantiate(gemsPrefab, new Vector3(gemsData.row, 3.5f, gemsData.column), Quaternion.Euler(currentLevelData.stackRotation) , gemsContainer);
+            }
+        }
+    }
 }

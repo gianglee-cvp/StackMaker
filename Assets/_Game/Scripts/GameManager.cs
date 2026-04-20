@@ -14,6 +14,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private UIManager uiManager;
     public int currentLevel = 1;
     public int maxLevel = 2;
+    private int _gemCount;
+
+    public int GemCount
+    {
+        get { return _gemCount; }
+        set
+        {
+            _gemCount = value;
+        }
+    }
 
     public static Action<string> OnChange; 
 
@@ -31,6 +41,8 @@ public class GameManager : MonoBehaviour
     
     public static GameManager Instance { get; private set; }
     public void OnInit(){
+        Point = 0; // Đặt lại điểm số về 0 khi khởi tạo lại level
+        GemCount = 0; // Đặt lại số lượng gem về 0 khi khởi tạo lại level
         mapManager.SetLevel(currentLevel);
         mapManager.OnInit();
         player.OnInit(mapManager.GetStartPos());
@@ -52,7 +64,7 @@ public class GameManager : MonoBehaviour
     }
     public void OnWin(){
         uiManager.UpdateStackCount(_point);
-
+        Debug.Log("Player Wins with " + _point + " stacks and " + GemCount + " gems!");
         OnChange?.Invoke("Win");
 
         uiManager.winPanel.SetActive(true);

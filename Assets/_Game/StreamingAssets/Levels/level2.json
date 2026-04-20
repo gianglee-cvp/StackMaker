@@ -2305,6 +2305,12 @@
         "winPos": {
             "row": 36,
             "column": -22
-        }
+        },
+        "gemsData": [
+            {
+                "row": 0,
+                "column": -5
+            }
+        ]
     }
 }

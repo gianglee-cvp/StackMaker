@@ -8,6 +8,7 @@ TagManager:
   - Corner
   - Stack
   - WinPos
+  - Gem
   layers:
   - Default
   - TransparentFX

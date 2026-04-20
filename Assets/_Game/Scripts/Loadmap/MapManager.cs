@@ -13,6 +13,7 @@ public partial class MapManager : MonoBehaviour
     [SerializeField] private GameObject cornerPrefab ;
     [SerializeField] private GameObject bridgePrefab ;
     [SerializeField] private GameObject winPosPrefab ;
+    [SerializeField] private GameObject gemsPrefab ;
 
     [Header("Containers")]
     [SerializeField] private Transform baseContainer ;
@@ -22,6 +23,7 @@ public partial class MapManager : MonoBehaviour
     [SerializeField] private Transform cornerContainer ;
     [SerializeField] private Transform bridgeContainer ;
     [SerializeField] private Transform winPosContainer ;
+    [SerializeField] private Transform gemsContainer ;
    // [SerializeField] private List<GameObject> baseList = new List<GameObject>() ;
 
     private LevelData currentLevelData ;
@@ -48,6 +50,7 @@ public partial class MapManager : MonoBehaviour
             GenCorner();
             GenBridge();
             GenWinPos();
+            GenGems();
         }
     }
     public Vector3 GetStartPos(){
@@ -71,6 +74,9 @@ public partial class MapManager : MonoBehaviour
             Destroy(child.gameObject);
         }
         foreach(Transform child in winPosContainer){
+            Destroy(child.gameObject);
+        }
+        foreach(Transform child in gemsContainer){
             Destroy(child.gameObject);
         }
     }

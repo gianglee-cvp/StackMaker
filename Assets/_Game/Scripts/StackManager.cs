@@ -108,8 +108,13 @@ public class StackManager : MonoBehaviour
             RemoveAllStack();
 
             playerBody.localRotation = Quaternion.Euler(0 , -90f , 0) ; // Quay mặt player về hướng winpos
-            playerAnimator.SetInteger("renwu" , 2);
+            playerAnimator.SetInteger("renwu" , 2); // Chuyển sang animation chiến thắng
 
+        }
+        else if (other.gameObject.CompareTag("Gem"))
+        {
+            GameManager.Instance.GemCount++; // Cập nhật số lượng gem khi thu thập được
+            Destroy(other.gameObject); // Hủy đối tượng gem sau khi thu thập
         }
         
     }
