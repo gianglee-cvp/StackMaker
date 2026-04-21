@@ -6107,6 +6107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1260059009}
   - component: {fileID: 1260059008}
+  - component: {fileID: 1260059010}
   m_Layer: 0
   m_Name: MapController
   m_TagString: Untagged
@@ -6162,6 +6163,18 @@ Transform:
   - {fileID: 504480363}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1260059010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260059007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fd22814cee4f47439d5f6eeda8dc715, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1304890943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6363,6 +6376,7 @@ MonoBehaviour:
   cameraFollow: {fileID: 1563332780}
   stackManager: {fileID: 1304890946}
   uiManager: {fileID: 700332386}
+  objectPooler: {fileID: 1260059010}
   currentLevel: 1
   maxLevel: 2
 --- !u!114 &1428312461

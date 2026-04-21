@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public partial class MapManager : MonoBehaviour
@@ -12,8 +9,8 @@ public partial class MapManager : MonoBehaviour
         {
             foreach( var baseData in currentLevelData.baseData)
             {
-               // Debug.Log("BaseData: Row: " + baseData.row + " Column: " + baseData.column);
-                Instantiate(basePrefab, new Vector3(baseData.row, 0, baseData.column), Quaternion.Euler(currentLevelData.baseRotation) , baseContainer);
+             //   Instantiate(basePrefab, new Vector3(baseData.row, 0, baseData.column), Quaternion.Euler(currentLevelData.baseRotation) , baseContainer);
+                ObjectPooler.Instance.SpawnFromPool( basePrefab , MapGenTag.Base , new Vector3(baseData.row, 0, baseData.column), Quaternion.Euler(currentLevelData.baseRotation) , baseContainer);
             }
         }
     }
@@ -22,12 +19,10 @@ public partial class MapManager : MonoBehaviour
         if(currentLevelData == null) return ;
         else
         {
-        //    Debug.Log("GenWall");
-        //    Debug.Log("WallData Count: " + currentLevelData.wallData.Count);
             foreach( var wallData in currentLevelData.wallData)
             {
-            //    Debug.Log("WallData: Row: " + wallData.row + " Column: " + wallData.column);
-                Instantiate(wallPrefab, new Vector3(wallData.row, 2.865f, wallData.column), Quaternion.Euler(currentLevelData.wallRotation) , wallContainer);
+             //   Instantiate(wallPrefab, new Vector3(wallData.row, 2.865f, wallData.column), Quaternion.Euler(currentLevelData.wallRotation) , wallContainer);
+                ObjectPooler.Instance.SpawnFromPool( wallPrefab , MapGenTag.Wall , new Vector3(wallData.row, 2.865f, wallData.column), Quaternion.Euler(currentLevelData.wallRotation) , wallContainer);
             }
         }
     }
@@ -38,8 +33,8 @@ public partial class MapManager : MonoBehaviour
         {
             foreach( var stackData in currentLevelData.stackData)
             {
-              //  Debug.Log("StackData: Row: " + stackData.row + " Column: " + stackData.column);
-                Instantiate(stackPrefab, new Vector3(stackData.row, 2.5f, stackData.column), Quaternion.Euler(currentLevelData.stackRotation) , stackContainer);
+              //  Instantiate(stackPrefab, new Vector3(stackData.row, 2.5f, stackData.column), Quaternion.Euler(currentLevelData.stackRotation) , stackContainer);
+                ObjectPooler.Instance.SpawnFromPool( stackPrefab , MapGenTag.Stack , new Vector3(stackData.row, 2.5f, stackData.column), Quaternion.Euler(currentLevelData.stackRotation) , stackContainer);
             }
         }
     }
@@ -50,9 +45,9 @@ public partial class MapManager : MonoBehaviour
         {
             foreach( var cornerData in currentLevelData.cornerData)
             {
-             //   Debug.Log("CornerData: Row: " + cornerData.row + " Column: " + cornerData.column);
                 float angle = (int)cornerData.direction * 90f;
-                Instantiate(cornerPrefab, new Vector3(cornerData.row, 2.5f, cornerData.column), Quaternion.Euler(0, angle, 0), cornerContainer);
+              //  Instantiate(cornerPrefab, new Vector3(cornerData.row, 2.5f, cornerData.column), Quaternion.Euler(0, angle, 0), cornerContainer);
+                ObjectPooler.Instance.SpawnFromPool( cornerPrefab , MapGenTag.Corner , new Vector3(cornerData.row, 2.5f, cornerData.column), Quaternion.Euler(0, angle, 0), cornerContainer);
             }
         }
     }
@@ -61,12 +56,12 @@ public partial class MapManager : MonoBehaviour
         if(currentLevelData == null) return ;
         else
         {
-         //   Debug.Log("GenBridge");
             foreach( var bridgeData in currentLevelData.bridgeData)
             {
               //  Debug.Log("BridgeData: Row: " + bridgeData.row + " Column: " + bridgeData.column);
                 float angle = (int)bridgeData.direction * 90f; // Horizontal -> 0, Vertical -> 90
-                Instantiate(bridgePrefab, new Vector3(bridgeData.row, 2.5f, bridgeData.column), Quaternion.Euler(-90, 0, angle), bridgeContainer);
+               // Instantiate(bridgePrefab, new Vector3(bridgeData.row, 2.5f, bridgeData.column), Quaternion.Euler(-90, 0, angle), bridgeContainer);
+               ObjectPooler.Instance.SpawnFromPool( bridgePrefab , MapGenTag.Bridge , new Vector3(bridgeData.row, 2.5f, bridgeData.column), Quaternion.Euler(-90, 0, angle), bridgeContainer);
             }
         }
     }
@@ -75,8 +70,8 @@ public partial class MapManager : MonoBehaviour
         if(currentLevelData == null || currentLevelData.winPos.row == -999) return ;
         else
         {
-          //  Debug.Log("GenWinPos");
-            Instantiate(winPosPrefab, new Vector3(currentLevelData.winPos.row, 0, currentLevelData.winPos.column), Quaternion.Euler(currentLevelData.winPosRotation) , winPosContainer);
+           // Instantiate(winPosPrefab, new Vector3(currentLevelData.winPos.row, 0, currentLevelData.winPos.column), Quaternion.Euler(currentLevelData.winPosRotation) , winPosContainer);
+            ObjectPooler.Instance.SpawnFromPool( winPosPrefab , MapGenTag.WinPos , new Vector3(currentLevelData.winPos.row, 0, currentLevelData.winPos.column), Quaternion.Euler(currentLevelData.winPosRotation) , winPosContainer);
         }
     }
     private void GenGems()
@@ -86,8 +81,8 @@ public partial class MapManager : MonoBehaviour
         {
             foreach( var gemsData in currentLevelData.gemsData)
             {
-                //  Debug.Log("StackData: Row: " + stackData.row + " Column: " + stackData.column);
-                Instantiate(gemsPrefab, new Vector3(gemsData.row, 3.5f, gemsData.column), Quaternion.Euler(currentLevelData.stackRotation) , gemsContainer);
+                //Instantiate(gemsPrefab, new Vector3(gemsData.row, 3.5f, gemsData.column), Quaternion.Euler(currentLevelData.stackRotation) , gemsContainer);
+               ObjectPooler.Instance.SpawnFromPool( gemsPrefab , MapGenTag.Gems , new Vector3(gemsData.row, 3.5f, gemsData.column), Quaternion.Euler(currentLevelData.stackRotation) , gemsContainer);
             }
         }
     }

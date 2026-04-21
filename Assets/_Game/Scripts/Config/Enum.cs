@@ -18,4 +18,13 @@ public enum MoveDirection
     Down,   // 2 -> Xuống
     Left    // 3 -> Trái
 }
-
+public enum MapGenTag
+{
+    Base, 
+    Wall,
+    Stack,
+    Corner,
+    Bridge,
+    WinPos,
+    Gems
+}

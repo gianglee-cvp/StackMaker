@@ -45,7 +45,7 @@ public class StackManager : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Player Triggered: " + other.gameObject.tag);
+    //    Debug.Log("Player Triggered: " + other.gameObject.tag);
         if(other.gameObject.CompareTag("Stack")){
             stackList.Add(other.gameObject);
             other.transform.SetParent(stackHolder);
@@ -64,7 +64,7 @@ public class StackManager : MonoBehaviour
         {
             PlayerController.Instance.hitCorner = true;
             Corner corner = other.gameObject.GetComponent<Corner>();
-            Debug.Log("PlayerController.Instance.curMoveDirection: " + PlayerController.Instance.curMoveDirection);
+            // Debug.Log("PlayerController.Instance.curMoveDirection: " + PlayerController.Instance.curMoveDirection);
             
             playerAnimator.SetInteger("renwu" , 1);  
 

@@ -6,7 +6,6 @@ public class Bridge : MonoBehaviour
     [SerializeField] GameObject bridgeColor ; 
     public void SetColor()
     {
-        Debug.Log("SetColor called on Bridge");
         bridgeColor.SetActive(true);
     }
 }

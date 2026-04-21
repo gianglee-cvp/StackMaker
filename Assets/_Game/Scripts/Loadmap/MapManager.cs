@@ -28,15 +28,6 @@ public partial class MapManager : MonoBehaviour
 
     private LevelData currentLevelData ;
     
-    void OnAwake()
-    {
-     //    List<BaseData> baseDataList = new List<BaseData>();
-    }
-    void Start()
-    {
-        Debug.Log("Start");
-        //OnInit();
-    }
 
     public void OnInit()
     {
@@ -59,30 +50,35 @@ public partial class MapManager : MonoBehaviour
     public void OnEnd()
     {
         foreach(Transform child in baseContainer){
-            Destroy(child.gameObject);
+            //Destroy(child.gameObject);
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Base , child.gameObject) ;
         }
         foreach(Transform child in wallContainer){
-            Destroy(child.gameObject);
+            //Destroy(child.gameObject);
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Wall , child.gameObject) ;
         }
         foreach(Transform child in stackContainer){
-            Destroy(child.gameObject);
+            //Destroy(child.gameObject);
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Stack , child.gameObject) ;
         }
         foreach(Transform child in cornerContainer){
-            Destroy(child.gameObject);
+            //Destroy(child.gameObject);
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Corner , child.gameObject) ;
         }
         foreach(Transform child in bridgeContainer){
-            Destroy(child.gameObject);
+            //Destroy(child.gameObject);
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Bridge , child.gameObject) ;
         }
         foreach(Transform child in winPosContainer){
-            Destroy(child.gameObject);
+           // Destroy(child.gameObject);
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.WinPos , child.gameObject) ;
         }
         foreach(Transform child in gemsContainer){
-            Destroy(child.gameObject);
+           // Destroy(child.gameObject);
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Gems , child.gameObject) ;
         }
     }
-    public void PlayWinEffect(){
-        winPosContainer.GetComponent<ParticleSystem>().Play();
-    }
+
     public void SetLevel(int level){
         currentLevelData = LevelLoader.LoadLevel("Assets/_Game/StreamingAssets/Levels/level" + level + ".json");
     }

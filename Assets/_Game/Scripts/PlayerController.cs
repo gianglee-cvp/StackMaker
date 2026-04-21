@@ -32,7 +32,6 @@ public class PlayerController : MonoBehaviour
         InputManager.OnSwipe -= HandleSwipe;
     }
     void HandleSwipe(MoveDirection moveDirection){
-      //  Debug.Log("Swipe: " + moveDirection);
         if(!isSliding){
             curMoveDirection = moveDirection;
         }
@@ -177,6 +176,7 @@ public class PlayerController : MonoBehaviour
         }
         else if(hitWinPos)
         {
+            curMoveDirection = MoveDirection.None; // Reset hướng để Update không gọi lại
             GameManager.Instance.OnWin(); // Reset game when player reaches win position
         }
         else
@@ -185,6 +185,7 @@ public class PlayerController : MonoBehaviour
             curMoveDirection = MoveDirection.None;
         }
         isSliding = false;
+        yield break;
 
     }
     void AddBrick()

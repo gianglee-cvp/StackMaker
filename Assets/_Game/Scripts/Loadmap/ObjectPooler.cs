@@ -2,28 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Pool
-{
-    public string tag;
-    public GameObject prefab;
-}
+
 public class ObjectPooler : MonoBehaviour
 {
-    public static ObjectPooler Instance;
-    public List<Pool> pools;
-    public Dictionary<string, Queue<GameObject>> poolDictionary;
+    private Dictionary<MapGenTag , Queue<GameObject>> poolDictionary ;
+
+    public static ObjectPooler Instance  ; 
 
     public void OnInit()
     {
-        if(Instance != null)
+        if(Instance == null)
         {
-            Destroy(gameObject);
-            return;
+            Instance = this ; 
         }
-        Instance = this;
-        poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        else
+        {
+            Destroy(gameObject) ; 
+        }
+        poolDictionary = new Dictionary<MapGenTag, Queue<GameObject>>() ;
+
 
     }
-    
+    public void SpawnFromPool(GameObject objPrefab, MapGenTag tag , Vector3 position , Quaternion rotation , Transform parent )
+    {
+        if(!poolDictionary.ContainsKey(tag))
+        {
+            poolDictionary.Add(tag , new Queue<GameObject>()) ;
+        }
+        if(poolDictionary[tag].Count == 0)
+        {
+            GameObject obj = Instantiate(objPrefab , position , rotation , parent) ; 
+        }
+        else
+        {
+            GameObject objectToSpawn = poolDictionary[tag].Dequeue() ; 
+            objectToSpawn.SetActive(true) ; 
+            objectToSpawn.transform.SetParent(parent) ;
+            objectToSpawn.transform.position = position ; 
+            objectToSpawn.transform.rotation = rotation ; 
+        }
+    }
+    public void ReturnToPool(MapGenTag tag , GameObject obj)
+    {
+        obj.transform.SetParent(null) ;
+        obj.SetActive(false) ; 
+        poolDictionary[tag].Enqueue(obj) ; 
+    }
+
     
 }

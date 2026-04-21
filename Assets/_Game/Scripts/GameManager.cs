@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CameraFollow cameraFollow;
     [SerializeField] private StackManager stackManager;
     [SerializeField] private UIManager uiManager;
+    [SerializeField] private ObjectPooler objectPooler;
     public int currentLevel = 1;
     public int maxLevel = 2;
     private int _gemCount;
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        objectPooler.OnInit();
         currentLevel = 2;
         OnInit();
     }
@@ -66,7 +68,6 @@ public class GameManager : MonoBehaviour
         uiManager.UpdateStackCount(_point);
         Debug.Log("Player Wins with " + _point + " stacks and " + GemCount + " gems!");
         OnChange?.Invoke("Win");
-
         uiManager.winPanel.SetActive(true);
         return ;
     }
