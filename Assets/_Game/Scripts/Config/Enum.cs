@@ -1,6 +1,3 @@
-
-using System.Numerics;
-
 public enum CornerDirection
 {
     UpLeft,     // 0 -> Góc 0
@@ -21,3 +18,4 @@ public enum MoveDirection
     Down,   // 2 -> Xuống
     Left    // 3 -> Trái
 }
+
