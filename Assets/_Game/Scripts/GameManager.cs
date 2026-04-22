@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private string MAX_PLAYER_LEVEL_KEY = "MaxPlayerLevel";
 
     public int currentLevel = 1;
-    public int maxLevel = 2; // level tối đa mà game có
+    public int maxLevel = 5; // level tối đa mà game có
     public int maxPlayerLevel  ; // level tối đa mà player có thể chơi , phải vượt qua để mở khóa thêm 
     private int _gemCount;
     private bool isUIShow; 
@@ -90,7 +90,6 @@ public class GameManager : MonoBehaviour
         uiManager.UpdateStackCount(_point);
         Debug.Log("Player Wins with " + _point + " stacks and " + GemCount + " gems!");
         OnChange?.Invoke("Win");
-        Debug.Log("OnWin event invoked");
         uiManager.winPanel.SetActive(true);
         IsUIShow = true; // Hiển thị UI khi chiến thắng
         return ;

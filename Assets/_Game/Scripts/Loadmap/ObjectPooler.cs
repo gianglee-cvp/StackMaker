@@ -32,7 +32,6 @@ public class ObjectPooler : MonoBehaviour
         if(poolDictionary[tag].Count == 0)
         {
             GameObject obj = Instantiate(objPrefab , position , rotation , parent) ; 
-            Debug.Log("Instantiated new object for tag: " + tag);
         }
         else
         {

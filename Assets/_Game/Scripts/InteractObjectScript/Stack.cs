@@ -7,7 +7,7 @@ public class Stack : MonoBehaviour
  public void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Player")){
-            Debug.Log("Player hit stack at position: " + transform.position);   
+            //Debug.Log("Player hit stack at position: " + transform.position);   
             StackManager.Instance.AddStack(stackCollider);
         }
     }

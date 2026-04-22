@@ -7075,7 +7075,7 @@ MonoBehaviour:
   uiManager: {fileID: 700332386}
   objectPooler: {fileID: 1260059010}
   currentLevel: 1
-  maxLevel: 2
+  maxLevel: 5
   maxPlayerLevel: 0
 --- !u!114 &1428312461
 MonoBehaviour:

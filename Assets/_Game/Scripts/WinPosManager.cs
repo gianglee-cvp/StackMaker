@@ -33,10 +33,8 @@ public class WinPosManager : MonoBehaviour
     }
     private void HandleGameStateChange(string state)
     {
-        Debug.Log("Game state changed: " + state);
         if (state == "Win")
         {
-            Debug.Log("Player reached Win state, updating treasure chest.");
             closeTreasure.SetActive(false);
             openTreasure.SetActive(true);
         }

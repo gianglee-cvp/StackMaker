@@ -13,7 +13,7 @@ public class Corner : MonoBehaviour
     }
     void OnEnable()
     {
-        Debug.Log("Corner nEnable called") ;
+      //  Debug.Log("Corner nEnable called") ;
         OnInit() ;
     }
     public void OnInit(){
