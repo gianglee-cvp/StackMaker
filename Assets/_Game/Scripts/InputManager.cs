@@ -17,6 +17,7 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.Instance.IsUIShow) return; // Nếu UI đang hiển thị, không xử lý input
         if (Input.GetMouseButtonDown(0))
         {
             startTouchPosition = Input.mousePosition;

@@ -5,7 +5,9 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] public GameObject deathPanel; // Kéo panel Game Over vào đây
     [SerializeField] public GameObject winPanel; // Kéo panel Victory vào đây
+    [SerializeField] public GameObject homePanel;
     [SerializeField] public TextMeshProUGUI stackCountText; // Kéo TextMeshPro hiển thị số stack vào đây\
+    [SerializeField] public TextMeshProUGUI levelText; // Kéo TextMeshPro hiển thị level vào đây
 
     public void OnInit()
     {
@@ -25,5 +27,9 @@ public class UIManager : MonoBehaviour
         {
             stackCountText.text += $"<sprite name=\"{digit}\">";
         }
+    }
+    public void UpdateLevelText(int level)
+    {
+        levelText.text = "Level " + level.ToString();
     }
 }
