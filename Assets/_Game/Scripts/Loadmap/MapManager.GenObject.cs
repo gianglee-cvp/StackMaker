@@ -58,9 +58,7 @@ public partial class MapManager : MonoBehaviour
         {
             foreach( var bridgeData in currentLevelData.bridgeData)
             {
-              //  Debug.Log("BridgeData: Row: " + bridgeData.row + " Column: " + bridgeData.column);
                 float angle = (int)bridgeData.direction * 90f; // Horizontal -> 0, Vertical -> 90
-               // Instantiate(bridgePrefab, new Vector3(bridgeData.row, 2.5f, bridgeData.column), Quaternion.Euler(-90, 0, angle), bridgeContainer);
                ObjectPooler.Instance.SpawnFromPool( bridgePrefab , MapGenTag.Bridge , new Vector3(bridgeData.row, 2.5f, bridgeData.column), Quaternion.Euler(-90, 0, angle), bridgeContainer);
             }
         }

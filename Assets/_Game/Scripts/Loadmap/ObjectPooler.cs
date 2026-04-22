@@ -32,18 +32,25 @@ public class ObjectPooler : MonoBehaviour
         if(poolDictionary[tag].Count == 0)
         {
             GameObject obj = Instantiate(objPrefab , position , rotation , parent) ; 
+            Debug.Log("Instantiated new object for tag: " + tag);
         }
         else
         {
             GameObject objectToSpawn = poolDictionary[tag].Dequeue() ; 
-            objectToSpawn.SetActive(true) ; 
+
             objectToSpawn.transform.SetParent(parent) ;
             objectToSpawn.transform.position = position ; 
             objectToSpawn.transform.rotation = rotation ; 
+            objectToSpawn.SetActive(true) ; 
         }
     }
     public void ReturnToPool(MapGenTag tag , GameObject obj)
     {
+        if(tag == MapGenTag.Bridge)
+        {
+            obj.GetComponent<BoxCollider>().enabled = true ;
+                obj.transform.GetChild(0).gameObject.SetActive(false) ;
+            }
         obj.transform.SetParent(null) ;
         obj.SetActive(false) ; 
         poolDictionary[tag].Enqueue(obj) ; 

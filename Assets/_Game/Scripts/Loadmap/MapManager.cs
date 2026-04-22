@@ -49,33 +49,26 @@ public partial class MapManager : MonoBehaviour
     }
     public void OnEnd()
     {
-        foreach(Transform child in baseContainer){
-            //Destroy(child.gameObject);
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Base , child.gameObject) ;
+        while(baseContainer.childCount > 0){
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Base , baseContainer.GetChild(0).gameObject) ;
         }
-        foreach(Transform child in wallContainer){
-            //Destroy(child.gameObject);
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Wall , child.gameObject) ;
+        while(wallContainer.childCount > 0){
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Wall , wallContainer.GetChild(0).gameObject) ;
         }
-        foreach(Transform child in stackContainer){
-            //Destroy(child.gameObject);
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Stack , child.gameObject) ;
+        while(stackContainer.childCount > 0){
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Stack , stackContainer.GetChild(0).gameObject) ;
         }
-        foreach(Transform child in cornerContainer){
-            //Destroy(child.gameObject);
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Corner , child.gameObject) ;
+        while(cornerContainer.childCount > 0){
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Corner , cornerContainer.GetChild(0).gameObject) ;
         }
-        foreach(Transform child in bridgeContainer){
-            //Destroy(child.gameObject);
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Bridge , child.gameObject) ;
+        while(bridgeContainer.childCount > 0){
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Bridge , bridgeContainer.GetChild(0).gameObject) ;
         }
-        foreach(Transform child in winPosContainer){
-           // Destroy(child.gameObject);
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.WinPos , child.gameObject) ;
+        while(winPosContainer.childCount > 0){
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.WinPos , winPosContainer.GetChild(0).gameObject) ;
         }
-        foreach(Transform child in gemsContainer){
-           // Destroy(child.gameObject);
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Gems , child.gameObject) ;
+        while(gemsContainer.childCount > 0){
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Gems , gemsContainer.GetChild(0).gameObject) ;
         }
     }
 

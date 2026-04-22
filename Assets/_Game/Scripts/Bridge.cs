@@ -8,4 +8,9 @@ public class Bridge : MonoBehaviour
     {
         bridgeColor.SetActive(true);
     }
+
+    public void UnsetColor()
+    {
+        if (bridgeColor != null) bridgeColor.SetActive(false);
+    }
 }
