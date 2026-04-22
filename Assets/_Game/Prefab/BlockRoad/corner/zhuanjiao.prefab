@@ -214,3 +214,4 @@ MonoBehaviour:
   mustMoveHorizontal: 0
   mustMoveVertical: 0
   animator: {fileID: 3973529043550335158}
+  cornerCollider: {fileID: 3935785843250541650}

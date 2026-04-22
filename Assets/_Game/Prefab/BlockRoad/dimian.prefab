@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8223776112258134953}
   - component: {fileID: 8217643915030219054}
   - component: {fileID: 2313293373314670061}
+  - component: {fileID: 4092453812614792477}
   m_Layer: 0
   m_Name: dimian
   m_TagString: Stack
@@ -108,3 +109,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0000005, y: 1.0000004, z: 0.29989845}
   m_Center: {x: 0.0000060945777, y: -0.0000002920447, z: 0.14994933}
+--- !u!114 &4092453812614792477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8240867822069996032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d42e05d5469274e845aa148bc5d5f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackCollider: {fileID: 2313293373314670061}

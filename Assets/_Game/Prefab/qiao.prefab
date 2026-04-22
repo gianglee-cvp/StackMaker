@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bridgeColor: {fileID: 7914651663979686294}
+  bridgeCollider: {fileID: 7918482531452209862}
 --- !u!1 &7914651663979686294
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class Corner : MonoBehaviour
     public MoveDirection mustMoveHorizontal = MoveDirection.None ; // xác định khi chạm vào góc này thì phải di chuyển theo hướng nào để không bị kẹt
     public MoveDirection mustMoveVertical = MoveDirection.None ; // xác định khi chạm vào góc này thì phải di chuyển theo hướng nào để không bị kẹt
     [SerializeField] private Animator animator ;
+    public Collider cornerCollider ;
     public void Start()
     {
         OnInit() ; 
@@ -40,6 +41,7 @@ public class Corner : MonoBehaviour
     {
      if(other.gameObject.CompareTag("Player")){
             animator.SetInteger("zhuanjiaoSet" , 1);
+            StackManager.Instance.HitCorner(cornerCollider);
         }
     }
     void OnTriggerExit(Collider other)

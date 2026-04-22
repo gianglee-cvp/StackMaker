@@ -39,67 +39,10 @@ public class StackManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
     void OnTriggerEnter(Collider other)
     {
-    //    Debug.Log("Player Triggered: " + other.gameObject.tag);
-        if(other.gameObject.CompareTag("Stack")){
-            stackList.Add(other.gameObject);
-            other.transform.SetParent(stackHolder);
-            other.transform.localPosition = new UnityEngine.Vector3(0 , stackHeight * stackCount - 0.5f , 0) ;  
-            playerBody.localPosition += new UnityEngine.Vector3(0 , stackHeight , 0) ;
-            stackCount++;
-            other.gameObject.GetComponent<Collider>().enabled = false; // Vô hiệu hóa collider của gạch đã thu thập
-            
-            // Cập nhật mốc Camera khi số lượng gạch thay đổi
-            if (cameraFollow != null)
-            {
-                cameraFollow.UpdateCameraMilestone(stackCount);
-            }
-        }
-        else if (other.gameObject.CompareTag("Corner"))
-        {
-            PlayerController.Instance.hitCorner = true;
-            Corner corner = other.gameObject.GetComponent<Corner>();
-            // Debug.Log("PlayerController.Instance.curMoveDirection: " + PlayerController.Instance.curMoveDirection);
-            
-            playerAnimator.SetInteger("renwu" , 1);  
-
-            if(PlayerController.Instance.curMoveDirection == MoveDirection.Up || PlayerController.Instance.curMoveDirection == MoveDirection.Down){
-                curMoveDirectionHitCorner = corner.mustMoveHorizontal;
-            }
-            else if(PlayerController.Instance.curMoveDirection == MoveDirection.Left || PlayerController.Instance.curMoveDirection == MoveDirection.Right){
-                curMoveDirectionHitCorner = corner.mustMoveVertical;
-            }
-        }
-        else if (other.gameObject.CompareTag("Bridge"))
-        {
-           // Debug.Log("Player hit Bridge, removing one stack...");
-            if(stackCount == 0) return ; // Nếu không còn stack nào thì không làm gì cả
-
-            Destroy(stackList[stackCount- 1]);
-            stackList.RemoveAt(stackCount - 1);
-            stackCount--;
-
-            playerBody.localPosition -= new Vector3(0 , stackHeight , 0) ;
-
-            if(stackCount == 0)
-            {
-                GameManager.Instance.OnDeath(); 
-            }
-
-
-             // Cập nhật mốc Camera khi số lượng gạch thay đổi
-            if (cameraFollow != null)
-            {
-                cameraFollow.UpdateCameraMilestone(stackCount);
-            }
-
-        }
-        else if(other.gameObject.CompareTag("WinPos")){
+        if(other.gameObject.CompareTag("WinPos")){
             PlayerController.Instance.hitWinPos = true;
 
             GameManager.Instance.Point = stackCount; // Cập nhật điểm khi đến vị trí chiến thắng
@@ -141,5 +84,58 @@ public class StackManager : MonoBehaviour
         stackCount = 0 ;
         playerBody.localPosition = new Vector3(0 , -0.3f , 0) ; // Đặt lại vị trí của player body về vị trí ban đầu
         playerBody.localRotation = Quaternion.Euler(0 , 90 , 0) ;
+    }
+    public void AddStack(Collider other)
+    {
+        stackList.Add(other.gameObject);
+        other.transform.SetParent(stackHolder);
+        other.transform.localPosition = new Vector3(0 , stackHeight * stackCount - 0.5f , 0) ;  
+        playerBody.localPosition += new Vector3(0 , stackHeight , 0) ;
+        stackCount++;
+        other.gameObject.GetComponent<Collider>().enabled = false; // Vô hiệu hóa collider của gạch đã thu thập
+        
+        // Cập nhật mốc Camera khi số lượng gạch thay đổi
+        if (cameraFollow != null)
+        {
+            cameraFollow.UpdateCameraMilestone(stackCount);
+        }
+    }
+    public void HitCorner(Collider other)
+    {
+        PlayerController.Instance.hitCorner = true;
+        Corner corner = other.gameObject.GetComponent<Corner>();
+        // Debug.Log("PlayerController.Instance.curMoveDirection: " + PlayerController.Instance.curMoveDirection);
+        
+        playerAnimator.SetInteger("renwu" , 1);  
+
+        if(PlayerController.Instance.curMoveDirection == MoveDirection.Up || PlayerController.Instance.curMoveDirection == MoveDirection.Down){
+            curMoveDirectionHitCorner = corner.mustMoveHorizontal;
+        }
+        else if(PlayerController.Instance.curMoveDirection == MoveDirection.Left || PlayerController.Instance.curMoveDirection == MoveDirection.Right){
+            curMoveDirectionHitCorner = corner.mustMoveVertical;
+        }
+    }
+    public void HitBridge(Collider other)
+    {
+        if(stackCount == 0) return ; // Nếu không còn stack nào thì không làm gì cả
+
+        Destroy(stackList[stackCount- 1]);
+        stackList.RemoveAt(stackCount - 1);
+        stackCount--;
+
+        playerBody.localPosition -= new Vector3(0 , stackHeight , 0) ;
+
+        if(stackCount == 0)
+        {
+            GameManager.Instance.OnDeath(); 
+        }
+
+
+            // Cập nhật mốc Camera khi số lượng gạch thay đổi
+        if (cameraFollow != null)
+        {
+            cameraFollow.UpdateCameraMilestone(stackCount);
+        }
+
     }
 }
