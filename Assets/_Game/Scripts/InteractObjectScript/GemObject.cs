@@ -1,6 +1,5 @@
-using UnityEngine; 
-
-public class BaseObject : PoolObject
+using UnityEngine;
+public class GemObject : PoolObject
 {
     public override void OnSpawn()
     {
@@ -10,4 +9,4 @@ public class BaseObject : PoolObject
     {
         base.OnDespawn();
     }
-}   
+}

@@ -8,7 +8,7 @@ public class PoolObject : MonoBehaviour
 public virtual void OnSpawn()
 {
 }
-public virtual void OnDesspawn()
+public virtual void OnDespawn()
 {
     trans.SetParent(null) ;
     obj.SetActive(false) ;

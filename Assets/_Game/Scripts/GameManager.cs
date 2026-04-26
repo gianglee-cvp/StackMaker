@@ -82,10 +82,6 @@ public class GameManager : MonoBehaviour
     }
 
         // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void OnWin(){
         uiManager.UpdateStackCount(_point);
         Debug.Log("Player Wins with " + _point + " stacks and " + GemCount + " gems!");

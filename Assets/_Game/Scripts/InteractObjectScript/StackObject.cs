@@ -16,8 +16,8 @@ public class StackObject : PoolObject
         base.OnSpawn();
         stackCollider.enabled = true; 
     }
-    public override void OnDesspawn()
+    public override void OnDespawn()
     {
-        base.OnDesspawn();
+        base.OnDespawn();
     }
 }

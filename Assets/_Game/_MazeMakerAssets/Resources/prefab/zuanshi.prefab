@@ -7947,6 +7947,7 @@ GameObject:
   - component: {fileID: 4204581141324716}
   - component: {fileID: 111197235321722274}
   - component: {fileID: 8673544700083866659}
+  - component: {fileID: 2225895857754328728}
   m_Layer: 0
   m_Name: zuanshi
   m_TagString: Gem
@@ -8011,3 +8012,18 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2225895857754328728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1957927936394622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8edd00c1c8198949a1c7d12725887b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Gentag: 6
+  trans: {fileID: 4204581141324716}
+  obj: {fileID: 1957927936394622}

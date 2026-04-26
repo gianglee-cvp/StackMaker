@@ -13,7 +13,7 @@ public partial class MapManager : MonoBehaviour
     [SerializeField] private PoolObject cornerPrefab ;
     [SerializeField] private PoolObject bridgePoolPrefab ;
     [SerializeField] private PoolObject winPosPrefab ;
-    [SerializeField] private GameObject gemsPrefab ;
+    [SerializeField] private PoolObject gemsPrefab ;
 
 
 
@@ -32,6 +32,7 @@ public partial class MapManager : MonoBehaviour
     private List<PoolObject> listCornerObjectsActive = new List<PoolObject>() ;
     private List<PoolObject> listBridgeObjectsActive = new List<PoolObject>() ;
     private List<PoolObject> listWinPosObjectsActive = new List<PoolObject>() ;
+    private List<PoolObject> listGemsObjectsActive = new List<PoolObject>() ;
 
     private LevelData currentLevelData ;
     int lastIndex = 0 ; 
@@ -86,8 +87,10 @@ public partial class MapManager : MonoBehaviour
             ObjectPooler.Instance.ReturnToPool(MapGenTag.WinPos , listWinPosObjectsActive[lastIndex]) ;
             listWinPosObjectsActive.RemoveAt(lastIndex) ;
         }
-        while(gemsContainer.childCount > 0){
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Gems , gemsContainer.GetChild(0).gameObject) ;
+        while(listGemsObjectsActive.Count > 0){
+            lastIndex = listGemsObjectsActive.Count - 1;
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Gems , listGemsObjectsActive[lastIndex]) ;
+            listGemsObjectsActive.RemoveAt(lastIndex) ;
         }
     }
 

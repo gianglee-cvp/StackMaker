@@ -41,7 +41,7 @@ public class StackManager : MonoBehaviour
         if (other.CompareTag("Gem"))
         {
             GameManager.Instance.GemCount++; // Cập nhật số lượng gem khi thu thập được
-            Destroy(other.gameObject); // Hủy đối tượng gem sau khi thu thập
+            other.gameObject.SetActive(false); // Vô hiệu hóa viên gem đã thu thập
         }
         
     }

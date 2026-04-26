@@ -52,9 +52,9 @@ public class CornerObject : PoolObject
     {
         base.OnSpawn();
     }
-    public override void OnDesspawn()
+    public override void OnDespawn()
     {
-        base.OnDesspawn();
+        base.OnDespawn();
     }
 
 }

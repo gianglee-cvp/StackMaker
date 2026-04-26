@@ -85,8 +85,8 @@ public partial class MapManager : MonoBehaviour
         {
             foreach( var gemsData in currentLevelData.gemsData)
             {
-                //Instantiate(gemsPrefab, new Vector3(gemsData.row, 3.5f, gemsData.column), Quaternion.Euler(currentLevelData.stackRotation) , gemsContainer);
-               ObjectPooler.Instance.SpawnFromPool( gemsPrefab , MapGenTag.Gems , new Vector3(gemsData.row, 3.5f, gemsData.column), Quaternion.Euler(currentLevelData.stackRotation) , gemsContainer);
+               PoolObject gemsObject = ObjectPooler.Instance.SpawnFromPool( gemsPrefab , MapGenTag.Gems , new Vector3(gemsData.row, 3.5f, gemsData.column), Quaternion.Euler(currentLevelData.stackRotation) , gemsContainer);
+               listGemsObjectsActive.Add(gemsObject);
             }
         }
     }

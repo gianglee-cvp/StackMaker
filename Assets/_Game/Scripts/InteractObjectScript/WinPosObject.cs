@@ -11,9 +11,9 @@ public class WinPosObject : PoolObject
         closeTreasure.SetActive(true);
         openTreasure.SetActive(false);
     }
-    public override void OnDesspawn()
+    public override void OnDespawn()
     {
-        base.OnDesspawn();
+        base.OnDespawn();
     }
     public void OpenTreasure()
     {

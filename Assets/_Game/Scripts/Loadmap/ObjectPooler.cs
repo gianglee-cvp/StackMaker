@@ -45,20 +45,9 @@ public class ObjectPooler : MonoBehaviour
             objectToSpawn.SetActive(true) ; 
         }
     }
-    public void ReturnToPool(MapGenTag tag , GameObject obj)
-    {
-        if(tag == MapGenTag.Bridge)
-        {
-            obj.GetComponent<BoxCollider>().enabled = true ;
-                obj.transform.GetChild(0).gameObject.SetActive(false) ;
-            }
-        obj.transform.SetParent(null) ;
-        obj.SetActive(false) ; 
-        poolDictionary[tag].Enqueue(obj) ; 
-    }
     public void ReturnToPool(MapGenTag tag ,PoolObject obj)
     {
-        obj.OnDesspawn() ;
+        obj.OnDespawn() ;
     }
     public PoolObject SpawnFromPool(PoolObject objPrefab, MapGenTag tag , Vector3 position , Quaternion rotation , Transform parent )
     {
