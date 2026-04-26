@@ -12,7 +12,7 @@ public class StackManager : MonoBehaviour
     public Transform stackHolder; // đối tượng cha chứa tất cả stack
     public Transform playerBody  ; 
     public float stackHeight = 0.3f ; 
-    public List<GameObject> stackList = new List<GameObject>();    
+    public List<PoolObject> stackList = new List<PoolObject>();    
     public int stackCount ; 
     public MoveDirection curMoveDirectionHitCorner = MoveDirection.None ; 
 
@@ -33,28 +33,12 @@ public class StackManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("WinPos")){
-            PlayerController.Instance.hitWinPos = true;
-
-            GameManager.Instance.Point = stackCount; // Cập nhật điểm khi đến vị trí chiến thắng
-            WinPosManager.Instance.PlayWinEffect(); // Phát hiệu ứng chiến thắng
-
-            RemoveAllStack();
-
-            playerBody.localRotation = Quaternion.Euler(0 , -90f , 0) ; // Quay mặt player về hướng winpos
-            playerAnimator.SetInteger("renwu" , 2); // Chuyển sang animation chiến thắng
-
-        }
-        else if (other.gameObject.CompareTag("Gem"))
+        if (other.CompareTag("Gem"))
         {
             GameManager.Instance.GemCount++; // Cập nhật số lượng gem khi thu thập được
             Destroy(other.gameObject); // Hủy đối tượng gem sau khi thu thập
@@ -63,36 +47,32 @@ public class StackManager : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.CompareTag("Corner"))
+        if(other.CompareTag("Corner"))
         {
             playerAnimator.SetInteger("renwu" , 0);
         }
-        if (other.gameObject.CompareTag("Bridge"))
-        {
-            other.gameObject.GetComponent<Bridge>().SetColor(); // Kích hoạt lại collider của cầu khi rời khỏi
-            other.gameObject.GetComponent<Collider>().enabled = false; // Vô hiệu hóa collider của cầu đã sử dụng
-        }
-
-
     }
-    void RemoveAllStack()
+    public void RemoveAllStack()
     {
-        foreach(GameObject stack in stackList){
-            Destroy(stack);
+        while(stackList.Count > 0){
+            int lastIndex = stackList.Count - 1;
+            stackList[lastIndex].gameObject.SetActive(false);
+            stackList.RemoveAt(lastIndex);
         }
         stackList.Clear();
         stackCount = 0 ;
         playerBody.localPosition = new Vector3(0 , -0.3f , 0) ; // Đặt lại vị trí của player body về vị trí ban đầu
         playerBody.localRotation = Quaternion.Euler(0 , 90 , 0) ;
     }
-    public void AddStack(Collider other)
+    public void AddStack( StackObject stackObject)
     {
-        stackList.Add(other.gameObject);
-        other.transform.SetParent(stackHolder);
-        other.transform.localPosition = new Vector3(0 , stackHeight * stackCount - 0.5f , 0) ;  
+        stackList.Add(stackObject);
+
+        stackObject.trans.SetParent(stackHolder);
+        stackObject.trans.localPosition = new Vector3(0 , stackHeight * stackCount - 0.5f , 0) ;  
         playerBody.localPosition += new Vector3(0 , stackHeight , 0) ;
         stackCount++;
-        other.gameObject.GetComponent<Collider>().enabled = false; // Vô hiệu hóa collider của gạch đã thu thập
+        stackObject.stackCollider.enabled = false; // Vô hiệu hóa collider của gạch đã thu thập
         
         // Cập nhật mốc Camera khi số lượng gạch thay đổi
         if (cameraFollow != null)
@@ -100,12 +80,9 @@ public class StackManager : MonoBehaviour
             cameraFollow.UpdateCameraMilestone(stackCount);
         }
     }
-    public void HitCorner(Collider other)
+    public void HitCorner(CornerObject corner)
     {
         PlayerController.Instance.hitCorner = true;
-        Corner corner = other.gameObject.GetComponent<Corner>();
-        // Debug.Log("PlayerController.Instance.curMoveDirection: " + PlayerController.Instance.curMoveDirection);
-        
         playerAnimator.SetInteger("renwu" , 1);  
 
         if(PlayerController.Instance.curMoveDirection == MoveDirection.Up || PlayerController.Instance.curMoveDirection == MoveDirection.Down){
@@ -119,7 +96,8 @@ public class StackManager : MonoBehaviour
     {
         if(stackCount == 0) return ; // Nếu không còn stack nào thì không làm gì cả
 
-        Destroy(stackList[stackCount- 1]);
+       // ObjectPooler.Instance.ReturnToPool(MapGenTag.Stack , stackList[stackCount- 1]);
+        stackList[stackCount - 1].gameObject.SetActive(false); 
         stackList.RemoveAt(stackCount - 1);
         stackCount--;
 
@@ -137,5 +115,22 @@ public class StackManager : MonoBehaviour
             cameraFollow.UpdateCameraMilestone(stackCount);
         }
 
+    }
+    public void OnHitWinPos(WinPosObject winPos)
+    {
+        PlayerController.Instance.hitWinPos = true;
+
+        GameManager.Instance.Point = stackCount; // Cập nhật điểm khi đến vị trí chiến thắng
+        winPos.PlayWinEffect(); // Phát hiệu ứng chiến thắng
+        RemoveAllStack();
+
+        playerBody.localRotation = Quaternion.Euler(0 , -90f , 0) ; // Quay mặt player về hướng winpos
+        winPos.OpenTreasure(); // Mở rương kho báu       
+        playerAnimator.SetInteger("renwu" , 2); // Chuyển sang animation chiến thắng
+    }
+    public void OnExitBridge(BridgeObject bridge)
+    {
+        bridge.SetColor(); // Kích hoạt lại collider của cầu khi rời khỏi
+        bridge.boxCollider.enabled = false; // Vô hiệu hóa collider của cầu đã sử dụng
     }
 }

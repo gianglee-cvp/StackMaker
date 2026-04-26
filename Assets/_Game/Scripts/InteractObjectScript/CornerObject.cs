@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Corner : MonoBehaviour
+public class CornerObject : PoolObject
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public MoveDirection mustMoveHorizontal = MoveDirection.None ; // xác định khi chạm vào góc này thì phải di chuyển theo hướng nào để không bị kẹt
@@ -39,15 +39,22 @@ public class Corner : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-     if(other.gameObject.CompareTag("Player")){
+     if(other.CompareTag("Player")){
             animator.SetInteger("zhuanjiaoSet" , 1);
-            StackManager.Instance.HitCorner(cornerCollider);
+            StackManager.Instance.HitCorner(this);
         }
     }
     void OnTriggerExit(Collider other)
     {
         animator.SetInteger("zhuanjiaoSet" , 0);
-
+    }
+    public override void OnSpawn()
+    {
+        base.OnSpawn();
+    }
+    public override void OnDesspawn()
+    {
+        base.OnDesspawn();
     }
 
 }

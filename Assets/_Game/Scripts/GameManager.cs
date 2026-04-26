@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MapManager mapManager;
     [SerializeField] private PlayerController player;
     [SerializeField] private CameraFollow cameraFollow;
-    [SerializeField] private StackManager stackManager;
+    [SerializeField] public StackManager stackManager;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private ObjectPooler objectPooler;
     private string LEVEL_KEY = "CurrentLevel";

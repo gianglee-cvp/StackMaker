@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 33448905800756249}
   - component: {fileID: 23425944778256323}
   - component: {fileID: 7918482531452209862}
-  - component: {fileID: 2321329404060398299}
+  - component: {fileID: 7550061574486941314}
   m_Layer: 0
-  m_Name: qiao
+  m_Name: BridgePrefab
   m_TagString: Bridge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.2946897, y: 1.0010463, z: 0.44389713}
   m_Center: {x: -0.00000047683716, y: 0, z: -0.000000007450582}
---- !u!114 &2321329404060398299
+--- !u!114 &7550061574486941314
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,11 +119,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1765046182180127}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0aac31f7ea68872448172367ef275cad, type: 3}
+  m_Script: {fileID: 11500000, guid: ac759313ea65ef241a2cfbf15142add9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Gentag: 4
+  trans: {fileID: 4604800304189370}
+  obj: {fileID: 1765046182180127}
+  boxCollider: {fileID: 7918482531452209862}
   bridgeColor: {fileID: 7914651663979686294}
-  bridgeCollider: {fileID: 7918482531452209862}
 --- !u!1 &7914651663979686294
 GameObject:
   m_ObjectHideFlags: 0

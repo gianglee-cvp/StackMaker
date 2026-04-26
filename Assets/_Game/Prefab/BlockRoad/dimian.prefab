@@ -121,4 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d42e05d5469274e845aa148bc5d5f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Gentag: 2
+  trans: {fileID: 8238782454643709555}
+  obj: {fileID: 8240867822069996032}
   stackCollider: {fileID: 2313293373314670061}

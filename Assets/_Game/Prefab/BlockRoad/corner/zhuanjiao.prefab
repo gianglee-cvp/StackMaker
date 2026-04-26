@@ -211,6 +211,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f9e113a011e2f4899bfc728b1d8b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Gentag: 3
+  trans: {fileID: 3925382842657773592}
+  obj: {fileID: 3923869074761503765}
   mustMoveHorizontal: 0
   mustMoveVertical: 0
   animator: {fileID: 3973529043550335158}

@@ -7,13 +7,15 @@ public partial class MapManager : MonoBehaviour
 {
 
     [Header("Prefabs")]
-    [SerializeField] private GameObject basePrefab ;
-    [SerializeField] private GameObject wallPrefab ;
-    [SerializeField] private GameObject stackPrefab ;
-    [SerializeField] private GameObject cornerPrefab ;
-    [SerializeField] private GameObject bridgePrefab ;
-    [SerializeField] private GameObject winPosPrefab ;
+    [SerializeField] private PoolObject basePoolPrefab ;
+    [SerializeField] private PoolObject wallPrefab ;
+    [SerializeField] private PoolObject stackPrefab ;
+    [SerializeField] private PoolObject cornerPrefab ;
+    [SerializeField] private PoolObject bridgePoolPrefab ;
+    [SerializeField] private PoolObject winPosPrefab ;
     [SerializeField] private GameObject gemsPrefab ;
+
+
 
     [Header("Containers")]
     [SerializeField] private Transform baseContainer ;
@@ -24,10 +26,15 @@ public partial class MapManager : MonoBehaviour
     [SerializeField] private Transform bridgeContainer ;
     [SerializeField] private Transform winPosContainer ;
     [SerializeField] private Transform gemsContainer ;
-   // [SerializeField] private List<GameObject> baseList = new List<GameObject>() ;
+    private List<PoolObject> listBaseObjectsActive = new List<PoolObject>() ;
+    private List<PoolObject> listWallObjectsActive = new List<PoolObject>() ;
+    private List<PoolObject> listStackObjectsActive = new List<PoolObject>() ;
+    private List<PoolObject> listCornerObjectsActive = new List<PoolObject>() ;
+    private List<PoolObject> listBridgeObjectsActive = new List<PoolObject>() ;
+    private List<PoolObject> listWinPosObjectsActive = new List<PoolObject>() ;
 
     private LevelData currentLevelData ;
-    
+    int lastIndex = 0 ; 
 
     public void OnInit()
     {
@@ -49,23 +56,35 @@ public partial class MapManager : MonoBehaviour
     }
     public void OnEnd()
     {
-        while(baseContainer.childCount > 0){
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Base , baseContainer.GetChild(0).gameObject) ;
+        while(listBaseObjectsActive.Count > 0){
+            lastIndex = listBaseObjectsActive.Count - 1;
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Base , listBaseObjectsActive[lastIndex]) ;
+            listBaseObjectsActive.RemoveAt(lastIndex) ;
         }
-        while(wallContainer.childCount > 0){
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Wall , wallContainer.GetChild(0).gameObject) ;
+        while(listWallObjectsActive.Count > 0){
+            lastIndex = listWallObjectsActive.Count - 1;
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Wall , listWallObjectsActive[lastIndex]) ;
+            listWallObjectsActive.RemoveAt(lastIndex) ;
         }
-        while(stackContainer.childCount > 0){
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Stack , stackContainer.GetChild(0).gameObject) ;
+        while(listStackObjectsActive.Count > 0){
+            lastIndex = listStackObjectsActive.Count - 1;
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Stack , listStackObjectsActive[lastIndex]) ;
+            listStackObjectsActive.RemoveAt(lastIndex) ;
         }
-        while(cornerContainer.childCount > 0){
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Corner , cornerContainer.GetChild(0).gameObject) ;
+        while(listCornerObjectsActive.Count > 0){
+            lastIndex = listCornerObjectsActive.Count - 1;
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Corner , listCornerObjectsActive[lastIndex]) ;
+            listCornerObjectsActive.RemoveAt(lastIndex) ;
         }
-        while(bridgeContainer.childCount > 0){
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Bridge , bridgeContainer.GetChild(0).gameObject) ;
+        while(listBridgeObjectsActive.Count > 0){
+            lastIndex = listBridgeObjectsActive.Count - 1;
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.Bridge , listBridgeObjectsActive[lastIndex]) ;
+            listBridgeObjectsActive.RemoveAt(lastIndex) ;
         }
-        while(winPosContainer.childCount > 0){
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.WinPos , winPosContainer.GetChild(0).gameObject) ;
+        while(listWinPosObjectsActive.Count > 0){
+            lastIndex = listWinPosObjectsActive.Count - 1;
+            ObjectPooler.Instance.ReturnToPool(MapGenTag.WinPos , listWinPosObjectsActive[lastIndex]) ;
+            listWinPosObjectsActive.RemoveAt(lastIndex) ;
         }
         while(gemsContainer.childCount > 0){
             ObjectPooler.Instance.ReturnToPool(MapGenTag.Gems , gemsContainer.GetChild(0).gameObject) ;
