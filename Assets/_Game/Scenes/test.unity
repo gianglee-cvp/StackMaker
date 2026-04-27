@@ -6829,8 +6829,8 @@ MonoBehaviour:
   stackPrefab: {fileID: 4092453812614792477, guid: 0d855a1e096e83b48955a28cdff917b8, type: 3}
   cornerPrefab: {fileID: 3298526410001950282, guid: b3faf43521be2474289d1b57c7121c0a, type: 3}
   bridgePoolPrefab: {fileID: 7550061574486941314, guid: b8c8fc2e035715340bf984925cbcfe24, type: 3}
-  winPosPrefab: {fileID: 1377060364527856, guid: 50c2fa3a6441d6144917cb20ab41fd98, type: 3}
-  gemsPrefab: {fileID: 1957927936394622, guid: 08903edef1bc6f44d80f73e76f9e0811, type: 3}
+  winPosPrefab: {fileID: 1251513115370197764, guid: 50c2fa3a6441d6144917cb20ab41fd98, type: 3}
+  gemsPrefab: {fileID: 2225895857754328728, guid: 08903edef1bc6f44d80f73e76f9e0811, type: 3}
   baseContainer: {fileID: 1964252441}
   wallContainer: {fileID: 1317141583}
   stackContainer: {fileID: 98056752}

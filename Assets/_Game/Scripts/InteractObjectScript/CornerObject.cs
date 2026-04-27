@@ -40,13 +40,13 @@ public class CornerObject : PoolObject
     void OnTriggerEnter(Collider other)
     {
      if(other.CompareTag("Player")){
-            animator.SetInteger("zhuanjiaoSet" , 1);
+            animator.SetInteger(GameConstant.CornerAinm , 1);
             StackManager.Instance.HitCorner(this);
         }
     }
     void OnTriggerExit(Collider other)
     {
-        animator.SetInteger("zhuanjiaoSet" , 0);
+        animator.SetInteger(GameConstant.CornerAinm , 0);
     }
     public override void OnSpawn()
     {

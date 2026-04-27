@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using System.Data.Common;
-// using System.Numerics;
 using UnityEngine;
+
 
 public class StackManager : MonoBehaviour
 {
@@ -20,7 +19,7 @@ public class StackManager : MonoBehaviour
     public void OnInit()
     {
             RemoveAllStack();
-            playerAnimator.SetInteger("renwu" , 0); // Đặt lại animation về trạng thái ban đầu
+            playerAnimator.SetInteger(GameConstant.PlayerAnim, 0); // Đặt lại animation về trạng thái ban đầu
 
              // Cập nhật mốc Camera khi số lượng gạch thay đổi
     }
@@ -49,7 +48,7 @@ public class StackManager : MonoBehaviour
     {
         if(other.CompareTag("Corner"))
         {
-            playerAnimator.SetInteger("renwu" , 0);
+            playerAnimator.SetInteger(GameConstant.PlayerAnim , 0);
         }
     }
     public void RemoveAllStack()
@@ -83,7 +82,7 @@ public class StackManager : MonoBehaviour
     public void HitCorner(CornerObject corner)
     {
         PlayerController.Instance.hitCorner = true;
-        playerAnimator.SetInteger("renwu" , 1);  
+        playerAnimator.SetInteger(GameConstant.PlayerAnim , 1);  
 
         if(PlayerController.Instance.curMoveDirection == MoveDirection.Up || PlayerController.Instance.curMoveDirection == MoveDirection.Down){
             curMoveDirectionHitCorner = corner.mustMoveHorizontal;
@@ -126,11 +125,12 @@ public class StackManager : MonoBehaviour
 
         playerBody.localRotation = Quaternion.Euler(0 , -90f , 0) ; // Quay mặt player về hướng winpos
         winPos.OpenTreasure(); // Mở rương kho báu       
-        playerAnimator.SetInteger("renwu" , 2); // Chuyển sang animation chiến thắng
+        playerAnimator.SetInteger(GameConstant.PlayerAnim , 2); // Chuyển sang animation chiến thắng
     }
     public void OnExitBridge(BridgeObject bridge)
     {
         bridge.SetColor(); // Kích hoạt lại collider của cầu khi rời khỏi
         bridge.boxCollider.enabled = false; // Vô hiệu hóa collider của cầu đã sử dụng
     }
+
 }

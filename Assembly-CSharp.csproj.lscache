@@ -54,7 +54,9 @@ Assets/
  TutorialInfo/Scripts/Readme.cs
  _Game/Scripts/
   CameraFollow.cs
-  Config/Enum.cs
+  Config/
+   Enum.cs
+   GameConstant.cs
   GameManager.cs
   InputManager.cs
   InteractObjectScript/
