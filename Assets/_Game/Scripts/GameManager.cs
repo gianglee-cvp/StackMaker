@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using System;
-using Unity.Collections.LowLevel.Unsafe;
-using NUnit.Framework;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -15,8 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public StackManager stackManager;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private ObjectPooler objectPooler;
-    private string LEVEL_KEY = "CurrentLevel";
-    private string MAX_PLAYER_LEVEL_KEY = "MaxPlayerLevel";
+    private DataManager dataManager = new DataManager();
 
     public int currentLevel = 1;
     public int maxLevel = 5; // level tối đa mà game có
@@ -72,8 +67,8 @@ public class GameManager : MonoBehaviour
         IsUIShow = true ; 
         Instance = this;
         objectPooler.OnInit();
-        currentLevel = PlayerPrefs.GetInt(LEVEL_KEY, 1);
-        maxPlayerLevel = PlayerPrefs.GetInt(MAX_PLAYER_LEVEL_KEY, 1);
+        currentLevel = dataManager.getCurrentLevel();
+        maxPlayerLevel = dataManager.getMaxPlayerLevel();
         OnInit();
         uiManager.UpdateLevelText(currentLevel);
         uiManager.homePanel.SetActive(true);
@@ -112,9 +107,7 @@ public class GameManager : MonoBehaviour
             currentLevel = 1;
         }
         else currentLevel++;
-        PlayerPrefs.SetInt(MAX_PLAYER_LEVEL_KEY, Mathf.Max(maxPlayerLevel, currentLevel)); // Cập nhật maxPlayerLevel nếu currentLevel vượt qua nó
-        PlayerPrefs.SetInt(LEVEL_KEY, currentLevel);
-        PlayerPrefs.Save();
+        dataManager.SaveNextLevel(currentLevel);
         uiManager.winPanel.SetActive(false);
         uiManager.deathPanel.SetActive(false);
         IsUIShow = false;
@@ -125,9 +118,8 @@ public class GameManager : MonoBehaviour
     {
         uiManager.homePanel.SetActive(false);
         IsUIShow = false; // Ẩn UI khi bắt đầu chơi
-        if(currentLevel != PlayerPrefs.GetInt(LEVEL_KEY, 1)){
-            PlayerPrefs.SetInt(LEVEL_KEY, currentLevel);
-            PlayerPrefs.Save();
+        if(currentLevel != dataManager.getCurrentLevel()){
+            dataManager.SaveLevel(currentLevel);
             mapManager.OnEnd();
             OnInit();
         }
@@ -138,8 +130,11 @@ public class GameManager : MonoBehaviour
             currentLevel = 1;
         }
         else currentLevel++;
-        PlayerPrefs.SetInt(LEVEL_KEY, currentLevel);
-        PlayerPrefs.Save();
+        if(currentLevel != dataManager.getCurrentLevel()){
+            mapManager.OnEnd();
+            OnInit();
+        }
+        dataManager.SaveLevel(currentLevel);
         uiManager.UpdateLevelText(currentLevel);
 
     }

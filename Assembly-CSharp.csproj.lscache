@@ -55,6 +55,7 @@ Assets/
  _Game/Scripts/
   CameraFollow.cs
   Config/
+   DataManager.cs
    Enum.cs
    GameConstant.cs
   GameManager.cs

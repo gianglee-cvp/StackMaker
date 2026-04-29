@@ -29,7 +29,7 @@ public class WinPosObject : PoolObject
     }
     public void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Player"))
+        if(other.CompareTag("Player"))
         {
             GameManager.Instance.stackManager.OnHitWinPos(this) ; 
         }
