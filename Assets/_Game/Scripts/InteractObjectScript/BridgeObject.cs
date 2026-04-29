@@ -21,14 +21,14 @@ public class BridgeObject : PoolObject
     }
     public void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag(GameConstant.PlayerTag))
         {
             GameManager.Instance.stackManager.HitBridge(boxCollider) ;
         }
     }
     public void OnTriggerExit(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if(other.CompareTag(GameConstant.PlayerTag))
         {
             GameManager.Instance.stackManager.OnExitBridge(this) ;
         }

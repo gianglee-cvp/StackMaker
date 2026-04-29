@@ -6,7 +6,7 @@ public class StackObject : PoolObject
  public Collider stackCollider;
  public void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player")){
+        if(other.CompareTag(GameConstant.PlayerTag)){
             //Debug.Log("Player hit stack at position: " + transform.position);   
             StackManager.Instance.AddStack( this);
         }

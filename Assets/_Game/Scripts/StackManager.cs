@@ -35,22 +35,22 @@ public class StackManager : MonoBehaviour
 
     // Update is called once per frame
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Gem"))
-        {
-            GameManager.Instance.GemCount++; // Cập nhật số lượng gem khi thu thập được
-            other.gameObject.SetActive(false); // Vô hiệu hóa viên gem đã thu thập
-        }
+    // void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.CompareTag("Gem"))
+    //     {
+    //         GameManager.Instance.GemCount++; // Cập nhật số lượng gem khi thu thập được
+    //         other.gameObject.SetActive(false); // Vô hiệu hóa viên gem đã thu thập
+    //     }
         
-    }
-    void OnTriggerExit(Collider other)
-    {
-        if(other.CompareTag("Corner"))
-        {
-            playerAnimator.SetInteger(GameConstant.PlayerAnim , 0);
-        }
-    }
+    // }
+    // void OnTriggerExit(Collider other)
+    // {
+    //     if(other.CompareTag("Corner"))
+    //     {
+    //         playerAnimator.SetInteger(GameConstant.PlayerAnim , 0);
+    //     }
+    // }
     public void RemoveAllStack()
     {
         while(stackList.Count > 0){
@@ -132,5 +132,12 @@ public class StackManager : MonoBehaviour
         bridge.SetColor(); // Kích hoạt lại collider của cầu khi rời khỏi
         bridge.boxCollider.enabled = false; // Vô hiệu hóa collider của cầu đã sử dụng
     }
-
+    public void HitGem()
+    {
+        GameManager.Instance.GemCount++; // Cập nhật số lượng gem khi thu thập được
+    }
+    public void OnExitGem()
+    {
+        playerAnimator.SetInteger(GameConstant.PlayerAnim , 0); // Chuyển sang animation ăn gem
+    }
 }
