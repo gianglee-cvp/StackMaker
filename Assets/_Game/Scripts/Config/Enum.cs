@@ -28,3 +28,12 @@ public enum MapGenTag
     WinPos,
     Gems
 }
+public enum GameState
+{
+    Home,
+    Playing,
+    Pause,
+    Win,
+    Lose,
+    Base
+}
