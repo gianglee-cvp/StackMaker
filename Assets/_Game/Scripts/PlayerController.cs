@@ -67,59 +67,6 @@ public class PlayerController : MonoBehaviour
      
     }
 
-    // void PlayerMove(MoveDirection moveDirection){
-    // //    Debug.Log("Player Move: " + moveDirection);
-    //     isSliding = true;
-    //     Vector3 dir = Vector3.zero;
-    //     curMoveDirection = moveDirection;
-    //    // Debug.Log("Current Move Direction: " + curMoveDirection);
-    //     if(curMoveDirection == MoveDirection.None) return ;
-    //     switch (curMoveDirection)
-    //     {
-    //         case MoveDirection.Right:
-    //         dir = Vector3.back;
-    //         break ; 
-    //         case MoveDirection.Left:
-    //         dir = Vector3.forward;
-    //         break;
-    //         case MoveDirection.Up:
-    //         dir = Vector3.right;
-    //         break ; 
-    //         case MoveDirection.Down:
-    //         dir = Vector3.left;
-    //         break;
-    //     }
-
-
-    //     int distance = 0 ; 
-    //     if(Physics.Raycast(detechWallPoint.position,dir, out RaycastHit hit, 50f , wallLayer)){
-    //         distance = Mathf.FloorToInt(Vector3.Distance(hit.point, detechWallPoint.position));
-    //     }
-    //     transform.DOMove(transform.position + dir * distance, 0.09f * distance)
-    //     .SetEase(Ease.InOutQuad)
-    //     .OnUpdate(()=>{
-    //         Debug.Log("Player is Sliding...");
-    //          if(StackManager.Instance.stackCount == 0 && !hitWinPos) transform.DOKill(); // Nếu không còn stack nào thì dừng tween để tránh lỗi khi player vẫn đang di chuyển nhưng đã hết stack
-    //     })
-    //     .OnComplete(()=>{
-    //         if(hitCorner){
-    //             hitCorner = false;
-    //             PlayerMove(StackManager.Instance.curMoveDirectionHitCorner);
-    //         }
-    //         else if(hitWinPos)
-    //         {
-    //             Debug.Log("Player reached Win Position!");
-    //             GameManager.Instance.OnWin(); // Reset game when player reaches win position
-    //         }
-    //         else
-    //         {
-    //             isSliding = false;
-    //             curMoveDirection = MoveDirection.None;
-    //         }
-            
-    //     });
-        
-    // }
     void PlayerMoveNormal(MoveDirection moveDirection){
         isSliding = true;
         Vector3 dir = Vector3.zero;

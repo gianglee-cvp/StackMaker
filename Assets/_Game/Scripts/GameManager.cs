@@ -55,10 +55,12 @@ public class GameManager : MonoBehaviour
     public void OnInit(){
         Point = 0; // Đặt lại điểm số về 0 khi khởi tạo lại level
         GemCount = 0; // Đặt lại số lượng gem về 0 khi khởi tạo lại level
+        Time.timeScale = 1f; // Đảm bảo thời gian được đặt lại về bình thường khi khởi tạo lại level
+        stackManager.OnInit(); // Gọi trước mapManager.OnInit để clear stack thừa, không vô tình tắt nhầm stack mới
+
         mapManager.SetLevel(currentLevel);
         mapManager.OnInit();
         player.OnInit(mapManager.GetStartPos());
-        stackManager.OnInit();
         cameraFollow.OnInit();
         uiManager.OnInit();
     }
@@ -69,35 +71,29 @@ public class GameManager : MonoBehaviour
         currentLevel = dataManager.getCurrentLevel();
         maxPlayerLevel = dataManager.getMaxPlayerLevel();
         uiManager.OnAwake();
+        mapManager.SetMapConfig();
         OnInit();
         uiManager.UpdateLevelText(currentLevel);
         uiManager.OnChangeUI(GameState.Home);
 
     }
-
-        // Update is called once per frame
     public void OnWin(){
         uiManager.UpdateStackCount(_point);
         Debug.Log("Player Wins with " + _point + " stacks and " + GemCount + " gems!");
         OnChange?.Invoke("Win");
         uiManager.OnChangeUI(GameState.Win);
-       // IsUIShow = true; // Hiển thị UI khi chiến thắng
         return ;
     }
     public void OnDeath(){
        // uiManager.deathPanel.SetActive(true);
         uiManager.OnChangeUI(GameState.Lose);
-      //  IsUIShow = true; // Hiển thị UI khi chết
         OnChange?.Invoke("Death");
         return ;
     }
     public void RestartButton(){
         uiManager.OnChangeUI(GameState.Playing);
-   //     IsUIShow = false; // Ẩn UI khi bắt đầu lại
         mapManager.OnEnd();
-
-        OnChange?.Invoke("Restart"); // winpos nghe để reset 
-
+        OnChange?.Invoke("Restart"); 
         OnInit();
     }
     public void NextLevelButton(){
@@ -113,12 +109,9 @@ public class GameManager : MonoBehaviour
     public void OnPlayButton()
     {
         uiManager.OnChangeUI(GameState.Playing);
-      //  IsUIShow = false; // Ẩn UI khi bắt đầu chơi
-        if(currentLevel != dataManager.getCurrentLevel()){
-            dataManager.SaveLevel(currentLevel);
-            mapManager.OnEnd();
-            OnInit();
-        }
+        dataManager.SaveLevel(currentLevel);
+        mapManager.OnEnd();
+        OnInit();
     }
     public void OnChangeLevelButton()
     {
@@ -147,13 +140,17 @@ public class GameManager : MonoBehaviour
     public void OnPauseButton()
     {
         uiManager.OnChangeUI(GameState.Pause);
+        Time.timeScale = 0f; // Tạm dừng thời gian trong game
     }
     public void OnResumeButton()
     {
         uiManager.OnChangeUI(GameState.Playing);
+        Time.timeScale = 1f; // Tiếp tục thời gian trong game
     }
     public void OnHomeButton()
     {
+
         uiManager.OnChangeUI(GameState.Home);
+        mapManager.OnEnd();
     }   
 }

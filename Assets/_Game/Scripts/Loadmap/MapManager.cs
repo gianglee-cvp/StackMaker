@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public partial class MapManager : MonoBehaviour
 {
@@ -26,30 +27,20 @@ public partial class MapManager : MonoBehaviour
     [SerializeField] private Transform bridgeContainer ;
     [SerializeField] private Transform winPosContainer ;
     [SerializeField] private Transform gemsContainer ;
-    private List<PoolObject> listBaseObjectsActive = new List<PoolObject>() ;
-    private List<PoolObject> listWallObjectsActive = new List<PoolObject>() ;
-    private List<PoolObject> listStackObjectsActive = new List<PoolObject>() ;
-    private List<PoolObject> listCornerObjectsActive = new List<PoolObject>() ;
-    private List<PoolObject> listBridgeObjectsActive = new List<PoolObject>() ;
-    private List<PoolObject> listWinPosObjectsActive = new List<PoolObject>() ;
-    private List<PoolObject> listGemsObjectsActive = new List<PoolObject>() ;
+
+    private Dictionary<MapGenTag, Queue<PoolObject>> listObjectsActive = new Dictionary<MapGenTag, Queue<PoolObject>>() ;
 
     private LevelData currentLevelData ;
-    int lastIndex = 0 ; 
 
     public void OnInit()
     {
-        //currentLevelData = LevelLoader.LoadLevel("Assets/_Game/StreamingAssets/Levels/level2.json");
         if(currentLevelData == null) return ;
         else
         {
-            GenBase();
-            GenWall();
-            GenStack();
-            GenCorner();
-            GenBridge();
-            GenWinPos();
-            GenGems();
+            foreach(TileData tileData in currentLevelData.tileDataList)
+            {
+                GenTile(tileData) ;
+            }
         }
     }
     public Vector3 GetStartPos(){
@@ -57,41 +48,19 @@ public partial class MapManager : MonoBehaviour
     }
     public void OnEnd()
     {
-        while(listBaseObjectsActive.Count > 0){
-            lastIndex = listBaseObjectsActive.Count - 1;
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Base , listBaseObjectsActive[lastIndex]) ;
-            listBaseObjectsActive.RemoveAt(lastIndex) ;
+        foreach( var pair in listObjectsActive)
+        {
+            MapGenTag tag = pair.Key ;
+            Queue<PoolObject> queue = pair.Value ;
+            // Gán tham chiếu chứ không phải copy0
+
+            while(queue.Count > 0)
+            {
+                var obj = queue.Dequeue() ;
+                ObjectPooler.Instance.ReturnToPool(tag , obj) ;
+            }
         }
-        while(listWallObjectsActive.Count > 0){
-            lastIndex = listWallObjectsActive.Count - 1;
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Wall , listWallObjectsActive[lastIndex]) ;
-            listWallObjectsActive.RemoveAt(lastIndex) ;
-        }
-        while(listStackObjectsActive.Count > 0){
-            lastIndex = listStackObjectsActive.Count - 1;
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Stack , listStackObjectsActive[lastIndex]) ;
-            listStackObjectsActive.RemoveAt(lastIndex) ;
-        }
-        while(listCornerObjectsActive.Count > 0){
-            lastIndex = listCornerObjectsActive.Count - 1;
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Corner , listCornerObjectsActive[lastIndex]) ;
-            listCornerObjectsActive.RemoveAt(lastIndex) ;
-        }
-        while(listBridgeObjectsActive.Count > 0){
-            lastIndex = listBridgeObjectsActive.Count - 1;
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Bridge , listBridgeObjectsActive[lastIndex]) ;
-            listBridgeObjectsActive.RemoveAt(lastIndex) ;
-        }
-        while(listWinPosObjectsActive.Count > 0){
-            lastIndex = listWinPosObjectsActive.Count - 1;
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.WinPos , listWinPosObjectsActive[lastIndex]) ;
-            listWinPosObjectsActive.RemoveAt(lastIndex) ;
-        }
-        while(listGemsObjectsActive.Count > 0){
-            lastIndex = listGemsObjectsActive.Count - 1;
-            ObjectPooler.Instance.ReturnToPool(MapGenTag.Gems , listGemsObjectsActive[lastIndex]) ;
-            listGemsObjectsActive.RemoveAt(lastIndex) ;
-        }
+        listObjectsActive.Clear() ;       
     }
 
     public void SetLevel(int level){

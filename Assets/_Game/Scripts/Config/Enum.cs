@@ -1,3 +1,4 @@
+using UnityEngine;
 public enum CornerDirection
 {
     UpLeft,     // 0 -> Góc 0
@@ -37,3 +38,18 @@ public enum GameState
     Lose,
     Base
 }
+    public class TileConfig
+    {
+        public PoolObject prefab;
+        public Transform parent;
+        public float yOffset;
+        public Vector3 rotationOffset;
+
+        public TileConfig(PoolObject prefab, Transform parent, float yOffset, Vector3 rotationOffset)
+        {
+            this.prefab = prefab;
+            this.parent = parent;
+            this.yOffset = yOffset;
+            this.rotationOffset = rotationOffset;
+        }
+    }

@@ -75,6 +75,9 @@ Assets/
    MapManager.cs
    MapManager.GenObject.cs
    ObjectPooler.cs
+  LoadMapTest/
+   LevelDataTest.cs
+   Test.cs
   PlayerController.cs
   StackManager.cs
   UIManager.cs

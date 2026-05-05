@@ -1,93 +1,46 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public partial class MapManager : MonoBehaviour
 {
-    private void GenBase()
+
+    Dictionary<MapGenTag, TileConfig> config;
+    public void SetMapConfig()
     {
-        if(currentLevelData == null) return ;
-        else
+        config = new Dictionary<MapGenTag, TileConfig>()
         {
-            foreach( var baseData in currentLevelData.baseData)
-            {
-                PoolObject baseObject = ObjectPooler.Instance.SpawnFromPool( basePoolPrefab , MapGenTag.Base , new Vector3(baseData.row, 0, baseData.column), Quaternion.Euler(currentLevelData.baseRotation) , baseContainer);
-                listBaseObjectsActive.Add(baseObject) ;
-            }
-        }
+            { MapGenTag.Base, new TileConfig(basePoolPrefab, baseContainer, 0f,new  Vector3(-90, 0 , 0)) },
+            { MapGenTag.Wall, new TileConfig(wallPrefab, wallContainer, 2.865f, new Vector3(-90, 0, 0)) },
+            { MapGenTag.Stack, new TileConfig(stackPrefab, stackContainer, 2.5f, new Vector3(-90, 0, -180)) },
+            { MapGenTag.Corner, new TileConfig(cornerPrefab, cornerContainer, 2.5f, Vector3.zero) },
+            { MapGenTag.Bridge, new TileConfig(bridgePoolPrefab, bridgeContainer, 2.5f, Vector3.zero) },
+            { MapGenTag.WinPos, new TileConfig(winPosPrefab, winPosContainer, 0f, new Vector3(0, 90, 0)) },
+            { MapGenTag.Gems, new TileConfig(gemsPrefab, gemsContainer, 0f, Vector3.zero) }
+        };
     }
-    private void GenWall()
+    public void GenTile(TileData tileData)
     {
-        if(currentLevelData == null) return ;
-        else
+        if (!config.ContainsKey(tileData.type))
         {
-            foreach( var wallData in currentLevelData.wallData)
-            {
-             //   Instantiate(wallPrefab, new Vector3(wallData.row, 2.865f, wallData.column), Quaternion.Euler(currentLevelData.wallRotation) , wallContainer);
-             //   ObjectPooler.Instance.SpawnFromPool( wallPrefab , MapGenTag.Wall , new Vector3(wallData.row, 2.865f, wallData.column), Quaternion.Euler(currentLevelData.wallRotation) , wallContainer);
-              PoolObject wallObject = ObjectPooler.Instance.SpawnFromPool( wallPrefab , MapGenTag.Wall , new Vector3(wallData.row, 2.865f, wallData.column), Quaternion.Euler(currentLevelData.wallRotation) , wallContainer);
-              listWallObjectsActive.Add(wallObject) ;
-            }
+            Debug.LogError($"No configuration found for MapGenTag: {tileData.type}");
+            return;
         }
+        TileConfig tileConfig = config[tileData.type];
+        if(tileData.type == MapGenTag.Corner)
+        {
+            tileConfig.rotationOffset = new Vector3(0, (int)tileData.cornerDirection * 90f, 0);
+        }
+        else if (tileData.type == MapGenTag.Bridge)
+        {
+            tileConfig.rotationOffset = new Vector3(-90, 0, (int)tileData.bridgeDirection * 90f);
+        }
+        PoolObject tileObject = ObjectPooler.Instance.SpawnFromPool(tileConfig.prefab, tileData.type, new Vector3(tileData.row, tileConfig.yOffset, tileData.column), Quaternion.Euler(tileConfig.rotationOffset) , tileConfig.parent);
+        if(!listObjectsActive.ContainsKey(tileData.type))
+        {
+            listObjectsActive.Add(tileData.type , new Queue<PoolObject>()) ;
+        }
+        listObjectsActive[tileData.type].Enqueue(tileObject);
+
     }
-    private void GenStack()
-    {
-        if(currentLevelData == null) return ;
-        else
-        {
-            foreach( var stackData in currentLevelData.stackData)
-            {
-              //  Instantiate(stackPrefab, new Vector3(stackData.row, 2.5f, stackData.column), Quaternion.Euler(currentLevelData.stackRotation) , stackContainer);
-                PoolObject stackObject = ObjectPooler.Instance.SpawnFromPool( stackPrefab , MapGenTag.Stack , new Vector3(stackData.row, 2.5f, stackData.column), Quaternion.Euler(currentLevelData.stackRotation) , stackContainer);
-                listStackObjectsActive.Add(stackObject);
-            }
-        }
-    }
-    private void GenCorner()
-    {
-        if(currentLevelData == null) return ;
-        else
-        {
-            foreach( var cornerData in currentLevelData.cornerData)
-            {
-                float angle = (int)cornerData.direction * 90f;
-              //  Instantiate(cornerPrefab, new Vector3(cornerData.row, 2.5f, cornerData.column), Quaternion.Euler(0, angle, 0), cornerContainer);
-                PoolObject cornerObject = ObjectPooler.Instance.SpawnFromPool( cornerPrefab , MapGenTag.Corner , new Vector3(cornerData.row, 2.5f, cornerData.column), Quaternion.Euler(0, angle, 0), cornerContainer);
-                listCornerObjectsActive.Add(cornerObject);
-            }
-        }
-    }   
-    private void GenBridge()
-    {
-        if(currentLevelData == null) return ;
-        else
-        {
-            foreach( var bridgeData in currentLevelData.bridgeData)
-            {
-                float angle = (int)bridgeData.direction * 90f; // Horizontal -> 0, Vertical -> 90
-                PoolObject bridgeObject = ObjectPooler.Instance.SpawnFromPool( bridgePoolPrefab , MapGenTag.Bridge , new Vector3(bridgeData.row, 2.5f, bridgeData.column), Quaternion.Euler(-90, 0, angle), bridgeContainer);
-                listBridgeObjectsActive.Add(bridgeObject);
-            }
-        }
-    }
-    private void GenWinPos()
-    {
-        if(currentLevelData == null || currentLevelData.winPos.row == -999) return ;
-        else
-        {
-           // Instantiate(winPosPrefab, new Vector3(currentLevelData.winPos.row, 0, currentLevelData.winPos.column), Quaternion.Euler(currentLevelData.winPosRotation) , winPosContainer);
-            PoolObject winPosObject = ObjectPooler.Instance.SpawnFromPool( winPosPrefab , MapGenTag.WinPos , new Vector3(currentLevelData.winPos.row, 0, currentLevelData.winPos.column), Quaternion.Euler(currentLevelData.winPosRotation) , winPosContainer);
-            listWinPosObjectsActive.Add(winPosObject);
-        }
-    }
-    private void GenGems()
-    {
-        if(currentLevelData == null) return ;
-        else
-        {
-            foreach( var gemsData in currentLevelData.gemsData)
-            {
-               PoolObject gemsObject = ObjectPooler.Instance.SpawnFromPool( gemsPrefab , MapGenTag.Gems , new Vector3(gemsData.row, 3.5f, gemsData.column), Quaternion.Euler(currentLevelData.stackRotation) , gemsContainer);
-               listGemsObjectsActive.Add(gemsObject);
-            }
-        }
-    }
+    
 }

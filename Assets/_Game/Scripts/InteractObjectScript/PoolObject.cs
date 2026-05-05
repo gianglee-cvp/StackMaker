@@ -11,7 +11,8 @@ public virtual void OnSpawn()
 public virtual void OnDespawn()
 {
     trans.SetParent(null) ;
-    obj.SetActive(false) ;
+    gameObject.SetActive(false) ;
+    if (obj != null) obj.SetActive(false) ;
     ObjectPooler.Instance.ReturnObjToQueue(Gentag , this) ;
 }
 }

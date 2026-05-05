@@ -68,7 +68,8 @@ public class ObjectPooler : MonoBehaviour
             objectToSpawn.trans.SetParent(parent) ;
             objectToSpawn.trans.position = position ; 
             objectToSpawn.trans.rotation = rotation ; 
-            objectToSpawn.obj.SetActive(true) ;
+            objectToSpawn.gameObject.SetActive(true) ;
+            if (objectToSpawn.obj != null) objectToSpawn.obj.SetActive(true) ;
             objectToSpawn.OnSpawn() ;
             return objectToSpawn ; 
         }
