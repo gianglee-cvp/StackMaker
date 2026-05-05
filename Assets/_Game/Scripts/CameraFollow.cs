@@ -34,15 +34,12 @@ public class CameraFollow : MonoBehaviour
     }
 
 
-    // Hàm này sẽ được gọi mỗi khi Player ăn hoặc rớt gạch
     public void UpdateCameraMilestone(int currentStackCount)
     {
         if (cameraConfigs == null) return;
         
-        // Duyệt qua tất cả các mốc bạn đã tạo
         foreach (var config in cameraConfigs)
         {
-            // Nếu số gạch hiện tại VƯỢT QUA hoặc BẰNG mốc này
             if (currentStackCount >= config.stackThreshold)
             {
                 activeConfig = config; 

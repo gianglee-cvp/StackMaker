@@ -4,7 +4,6 @@ using System;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private MapManager mapManager;
     [SerializeField] private PlayerController player;
     [SerializeField] private CameraFollow cameraFollow;
@@ -64,7 +63,7 @@ public class GameManager : MonoBehaviour
         cameraFollow.OnInit();
         uiManager.OnInit();
     }
-    void Awake()
+    private void Awake()
     { 
         Instance = this;
         objectPooler.OnInit();
@@ -82,13 +81,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player Wins with " + _point + " stacks and " + GemCount + " gems!");
         OnChange?.Invoke("Win");
         uiManager.OnChangeUI(GameState.Win);
-        return ;
     }
     public void OnDeath(){
-       // uiManager.deathPanel.SetActive(true);
         uiManager.OnChangeUI(GameState.Lose);
         OnChange?.Invoke("Death");
-        return ;
     }
     public void RestartButton(){
         uiManager.OnChangeUI(GameState.Playing);

@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class StackObject : PoolObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
  public Collider stackCollider;
- public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag(GameConstant.PlayerTag)){
             //Debug.Log("Player hit stack at position: " + transform.position);   

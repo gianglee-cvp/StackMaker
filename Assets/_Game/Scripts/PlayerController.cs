@@ -23,20 +23,20 @@ public class PlayerController : MonoBehaviour
         hitCorner = false;
         hitWinPos = false;
     }
-    void OnEnable()
+    private void OnEnable()
     {
         InputManager.OnSwipe += HandleSwipe;
     }
-    void OnDisable()
+    private void OnDisable()
     {
         InputManager.OnSwipe -= HandleSwipe;
     }
-    void HandleSwipe(MoveDirection moveDirection){
+    private void HandleSwipe(MoveDirection moveDirection){
         if(!isSliding){
             curMoveDirection = moveDirection;
         }
     }
-    void Awake()
+    private void Awake()
     {
         if(Instance == null){
             Instance = this;
@@ -45,14 +45,8 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    void Start()
-    {
-        
-    }
 
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
      if(isSliding) return;
      else{
@@ -67,7 +61,7 @@ public class PlayerController : MonoBehaviour
      
     }
 
-    void PlayerMoveNormal(MoveDirection moveDirection){
+    private void PlayerMoveNormal(MoveDirection moveDirection){
         isSliding = true;
         Vector3 dir = Vector3.zero;
         curMoveDirection = moveDirection;
@@ -143,7 +137,7 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-    Vector3 SnapToGrid(Vector3 position)
+    public Vector3 SnapToGrid(Vector3 position)
     {
         float x = Mathf.Round(position.x);
         float y = Mathf.Round(position.y);

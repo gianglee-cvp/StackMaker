@@ -19,14 +19,14 @@ public class BridgeObject : PoolObject
     {
         bridgeColor.SetActive(true) ;
     }
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag(GameConstant.PlayerTag))
         {
             GameManager.Instance.stackManager.HitBridge(boxCollider) ;
         }
     }
-    public void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if(other.CompareTag(GameConstant.PlayerTag))
         {

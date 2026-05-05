@@ -1,17 +1,16 @@
 using System.Collections.Generic;
-using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] public GameObject deathPanel; // Kéo panel Game Over vào đây
-    [SerializeField] public GameObject winPanel; // Kéo panel Victory vào đây
-    [SerializeField] public GameObject homePanel;
-    [SerializeField] public GameObject pausePanel;
-    [SerializeField] public GameObject playPanel;
-    [SerializeField] public TextMeshProUGUI stackCountText; // Kéo TextMeshPro hiển thị số stack vào đây\
-    [SerializeField] public TextMeshProUGUI levelText; // Kéo TextMeshPro hiển thị level vào đây
+    [SerializeField] private GameObject deathPanel;
+    [SerializeField] private GameObject winPanel;
+    [SerializeField] private GameObject homePanel;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject playPanel;
+    [SerializeField] private TextMeshProUGUI stackCountText;
+    [SerializeField] private TextMeshProUGUI levelText;
     private Dictionary<GameState, GameObject> uiPanels = new Dictionary<GameState, GameObject>();
     private GameState currentState = GameState.Base ;
     public void OnAwake()

@@ -7,11 +7,7 @@ public class CornerObject : PoolObject
     public MoveDirection mustMoveVertical = MoveDirection.None ; // xác định khi chạm vào góc này thì phải di chuyển theo hướng nào để không bị kẹt
     [SerializeField] private Animator animator ;
     public Collider cornerCollider ;
-    public void Start()
-    {
-        OnInit() ; 
-    }
-    void OnEnable()
+    private void OnEnable()
     {
       //  Debug.Log("Corner nEnable called") ;
         OnInit() ;
@@ -37,14 +33,14 @@ public class CornerObject : PoolObject
                 break;
         }
     }
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
      if(other.CompareTag(GameConstant.PlayerTag)){
             animator.SetInteger(GameConstant.CornerAinm , 1);
             StackManager.Instance.HitCorner(this);
         }
     }
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if(other.CompareTag(GameConstant.PlayerTag)){
             animator.SetInteger(GameConstant.CornerAinm , 0);

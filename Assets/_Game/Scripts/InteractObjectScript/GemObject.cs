@@ -9,7 +9,7 @@ public class GemObject : PoolObject
     {
         base.OnDespawn();
     }
-    public  void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag(GameConstant.PlayerTag))
         {

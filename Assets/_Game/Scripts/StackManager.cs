@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class StackManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     [SerializeField] CameraFollow cameraFollow; // Kéo Camera vào đây để gọi hàm cập nhật mốc khi số lượng gạch thay đổi
     public static StackManager Instance;
@@ -23,7 +22,7 @@ public class StackManager : MonoBehaviour
 
              // Cập nhật mốc Camera khi số lượng gạch thay đổi
     }
-    void Awake()
+    private void Awake()
     {
         if(Instance == null){
             Instance = this;

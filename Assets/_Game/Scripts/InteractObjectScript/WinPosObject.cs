@@ -27,7 +27,7 @@ public class WinPosObject : PoolObject
             winEffect.Play();
         }
     }
-    public void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag(GameConstant.PlayerTag))
         {

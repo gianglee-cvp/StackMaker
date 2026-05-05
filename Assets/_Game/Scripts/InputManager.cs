@@ -3,19 +3,11 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public static Action<MoveDirection> OnSwipe;
     public float swipeRange = 50f;
     private Vector2 startTouchPosition;
     private bool isSwiping = false;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-
-    void Update()
+    private void Update()
     {
         if(GameManager.Instance.IsUIShow) return; // Nếu UI đang hiển thị, không xử lý input
         if (Input.GetMouseButtonDown(0))
