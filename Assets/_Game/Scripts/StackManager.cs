@@ -46,8 +46,8 @@ public class StackManager : MonoBehaviour
     {
         stackList.Add(stackObject);
 
-        stackObject.trans.SetParent(stackHolder);
-        stackObject.trans.localPosition = new Vector3(0 , stackHeight * stackCount - 0.5f , 0) ;  
+        stackObject.transform.SetParent(stackHolder);
+        stackObject.transform.localPosition = new Vector3(0 , stackHeight * stackCount - 0.5f , 0) ;  
         playerBody.localPosition += new Vector3(0 , stackHeight , 0) ;
         stackCount++;
         stackObject.stackCollider.enabled = false;

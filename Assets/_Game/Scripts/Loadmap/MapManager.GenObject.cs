@@ -33,7 +33,12 @@ public partial class MapManager : MonoBehaviour
         {
             tileConfig.rotationOffset = new Vector3(-90, 0, (int)tileData.bridgeDirection * 90f);
         }
-        PoolObject tileObject = ObjectPooler.Instance.SpawnFromPool(tileConfig.prefab, tileData.type, new Vector3(tileData.row, tileConfig.yOffset, tileData.column), Quaternion.Euler(tileConfig.rotationOffset) , tileConfig.parent);
+        PoolObject tileObject = ObjectPooler.Instance.SpawnFromPool(
+            tileConfig.prefab,
+            tileData.type,
+            new Vector3(tileData.row, tileConfig.yOffset, tileData.column),
+            Quaternion.Euler(tileConfig.rotationOffset) , tileConfig.parent
+        );
         if(!listObjectsActive.ContainsKey(tileData.type))
         {
             listObjectsActive.Add(tileData.type , new Queue<PoolObject>()) ;

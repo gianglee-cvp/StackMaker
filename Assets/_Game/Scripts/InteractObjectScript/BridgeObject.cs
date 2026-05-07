@@ -5,10 +5,7 @@ public class BridgeObject : PoolObject
 {
     public BoxCollider boxCollider ;
     public GameObject bridgeColor ; 
-    public override void OnSpawn()
-    {
-        base.OnSpawn();
-    }
+
     public override void OnDespawn()
     {
         base.OnDespawn();

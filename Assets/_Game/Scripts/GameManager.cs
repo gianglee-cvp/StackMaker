@@ -15,33 +15,14 @@ public class GameManager : MonoBehaviour
     public int currentLevel = 1;
     public int maxLevel = 5; // level tối đa mà game có
     public int maxPlayerLevel  ; // level tối đa mà player có thể chơi , phải vượt qua để mở khóa thêm 
-    private int _gemCount;
-    private bool isUIShow; 
-    public bool IsUIShow
-    {
-        get { return isUIShow; }
-        set
-        {
-            isUIShow = value;
-        }
-    }
+    public bool IsUIShow { get; set; }
+    public int GemCount { get; set; }
 
-    public int GemCount
-    {
-        get { return _gemCount; }
-        set
-        {
-            _gemCount = value;
-        }
-    }
-
-    public static Action<string> OnChange; 
 
     private int _point; 
-
     public int Point
     {
-        get { return _point; }
+        get => _point;
         set
         {
             _point = value;
@@ -79,17 +60,14 @@ public class GameManager : MonoBehaviour
     public void OnWin(){
         uiManager.UpdateStackCount(_point);
         Debug.Log("Player Wins with " + _point + " stacks and " + GemCount + " gems!");
-        OnChange?.Invoke("Win");
         uiManager.OnChangeUI(GameState.Win);
     }
     public void OnDeath(){
         uiManager.OnChangeUI(GameState.Lose);
-        OnChange?.Invoke("Death");
     }
     public void RestartButton(){
         uiManager.OnChangeUI(GameState.Playing);
         mapManager.OnEnd();
-        OnChange?.Invoke("Restart"); 
         OnInit();
     }
     public void NextLevelButton(){

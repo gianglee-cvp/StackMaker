@@ -18,6 +18,7 @@ public class CameraFollow : MonoBehaviour
     public CameraOffsetConfigByStackCount[] cameraConfigs; 
 
     private CameraOffsetConfigByStackCount activeConfig;
+    float smoothSpeed = 8f;
 
     public void OnInit()
     {
@@ -27,7 +28,7 @@ public class CameraFollow : MonoBehaviour
         }
         if (target == null)
         {
-            Debug.LogError("CameraFollow: No target assigned.");
+            Debug.LogError("CameraFollow");
         }
         transform.position = target.position + activeConfig.offset;
         transform.rotation = Quaternion.Euler(activeConfig.rotationOffset);
@@ -54,8 +55,8 @@ public class CameraFollow : MonoBehaviour
         Vector3 targetPosition = target.position + activeConfig.offset;
         Quaternion targetRotation = Quaternion.Euler(activeConfig.rotationOffset);
 
-        float smoothSpeed = 8f * Time.deltaTime;
-        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, smoothSpeed);
+
+        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, smoothSpeed * Time.deltaTime);
     }
 }

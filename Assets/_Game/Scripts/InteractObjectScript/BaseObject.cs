@@ -2,12 +2,4 @@ using UnityEngine;
 
 public class BaseObject : PoolObject
 {
-    public override void OnSpawn()
-    {
-        base.OnSpawn();
-    }
-    public override void OnDespawn()
-    {
-        base.OnDespawn();
-    }
 }   
