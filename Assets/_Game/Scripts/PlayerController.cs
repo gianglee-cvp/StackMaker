@@ -6,12 +6,13 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
-    public bool isSliding = false;
+
     public MoveDirection curMoveDirection = MoveDirection.None;
     [SerializeField] private Transform detechWallPoint ; 
     [SerializeField] private LayerMask wallLayer;
     public bool hitCorner = false ;
     public bool hitWinPos = false ;
+    public bool isSliding = false;
     private float speed = 10f ;
 
     private Coroutine moveCoroutine;
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour
         }
         Vector3  targetPos = transform.position + dir * distance;
         targetPos = SnapToGrid(targetPos); // Làm tròn vị trí đến gần nhất trên lưới để tránh lỗi do số lẻ khi di chuyển
+
         if(moveCoroutine != null){
             StopCoroutine(moveCoroutine);
         }
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour
                 targetPos,
                 speed * Time.deltaTime
             );
-            yield return null;
+            yield return null; 
         }
         transform.position = targetPos; // Đảm bảo vị trí cuối cùng chính xác
         if(hitCorner){
