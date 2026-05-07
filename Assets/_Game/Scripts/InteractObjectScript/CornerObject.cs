@@ -2,18 +2,16 @@ using UnityEngine;
 
 public class CornerObject : PoolObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public MoveDirection mustMoveHorizontal = MoveDirection.None ; // xác định khi chạm vào góc này thì phải di chuyển theo hướng nào để không bị kẹt
-    public MoveDirection mustMoveVertical = MoveDirection.None ; // xác định khi chạm vào góc này thì phải di chuyển theo hướng nào để không bị kẹt
+    public MoveDirection mustMoveHorizontal = MoveDirection.None ; 
+    public MoveDirection mustMoveVertical = MoveDirection.None ; 
     [SerializeField] private Animator animator ;
     public Collider cornerCollider ;
     private void OnEnable()
     {
-      //  Debug.Log("Corner nEnable called") ;
         OnInit() ;
     }
     public void OnInit(){
-        int yAngle = Mathf.RoundToInt(transform.rotation.eulerAngles.y) % 360; // Lấy góc quay quanh trục Y và đảm bảo nó nằm trong khoảng 0-359
+        int yAngle = Mathf.RoundToInt(transform.rotation.eulerAngles.y) % 360; 
         switch(yAngle){
             case 0 :
                 mustMoveHorizontal = MoveDirection.Right ;

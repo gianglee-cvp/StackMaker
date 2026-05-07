@@ -52,10 +52,10 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
     public void OnInit(){
-        Point = 0; // Đặt lại điểm số về 0 khi khởi tạo lại level
-        GemCount = 0; // Đặt lại số lượng gem về 0 khi khởi tạo lại level
-        Time.timeScale = 1f; // Đảm bảo thời gian được đặt lại về bình thường khi khởi tạo lại level
-        stackManager.OnInit(); // Gọi trước mapManager.OnInit để clear stack thừa, không vô tình tắt nhầm stack mới
+        Point = 0; 
+        GemCount = 0; 
+        Time.timeScale = 1f; 
+        stackManager.OnInit(); 
 
         mapManager.SetLevel(currentLevel);
         mapManager.OnInit();
@@ -136,12 +136,12 @@ public class GameManager : MonoBehaviour
     public void OnPauseButton()
     {
         uiManager.OnChangeUI(GameState.Pause);
-        Time.timeScale = 0f; // Tạm dừng thời gian trong game
+        Time.timeScale = 0f; 
     }
     public void OnResumeButton()
     {
         uiManager.OnChangeUI(GameState.Playing);
-        Time.timeScale = 1f; // Tiếp tục thời gian trong game
+        Time.timeScale = 1f; 
     }
     public void OnHomeButton()
     {

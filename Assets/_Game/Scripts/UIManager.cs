@@ -52,18 +52,17 @@ public class UIManager : MonoBehaviour
     {
         if(currentState == state)
         {
-            // Debug.LogWarning("UI is already in state: " + state);
             return;
         } 
         else
         {
             if(state == GameState.Playing)
             {
-                GameManager.Instance.IsUIShow = false; // Ẩn UI khi vào trạng thái Playing
+                GameManager.Instance.IsUIShow = false; 
             }
             else
             {
-                GameManager.Instance.IsUIShow = true; // Hiển thị UI khi vào trạng thái khác Playing
+                GameManager.Instance.IsUIShow = true; 
             }
             if(uiPanels.ContainsKey(currentState))
             {

@@ -5,7 +5,6 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public static PlayerController Instance;
     public bool isSliding = false;
     public MoveDirection curMoveDirection = MoveDirection.None;
@@ -55,7 +54,6 @@ public class PlayerController : MonoBehaviour
         }
         else{
             PlayerMoveNormal(curMoveDirection);
-        //    isSliding = false; sẽ sửa trong oncompltete của tween sau
         }
      }
      
@@ -118,24 +116,16 @@ public class PlayerController : MonoBehaviour
         else if(hitWinPos)
         {
             curMoveDirection = MoveDirection.None; // Reset hướng để Update không gọi lại
-            GameManager.Instance.OnWin(); // Reset game when player reaches win position
+            GameManager.Instance.OnWin(); 
         }
         else
         {
-            // cần else ở ddaay bởi vì nếu player chạm vào góc mà sẻ direction về none thì sẽ khoogn thể so sánh trong stackmanager được
+            // Cần else ở ddaay bởi vì nếu player chạm vào góc mà sẻ direction về none thì sẽ khoogn thể so sánh trong stackmanager được
             curMoveDirection = MoveDirection.None;
         }
         isSliding = false;
         yield break;
 
-    }
-    void AddBrick()
-    {
-        
-    }
-    void RemoveBrick()
-    {
-        
     }
     public Vector3 SnapToGrid(Vector3 position)
     {

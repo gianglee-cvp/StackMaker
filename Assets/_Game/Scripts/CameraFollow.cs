@@ -4,15 +4,15 @@ using UnityEngine;
 [Serializable]
 public struct CameraOffsetConfigByStackCount
 {
-    public int stackThreshold;    // Mốc số gạch (Ví dụ: 10, 20, 30)
-    public Vector3 offset;        // Khoảng cách Camera
-    public Vector3 rotationOffset; // Góc xoay Camera
+    public int stackThreshold;    
+    public Vector3 offset;        
+    public Vector3 rotationOffset; 
 }
 
 public class CameraFollow : MonoBehaviour
 {
 
-    public Transform target; // Kéo vật thể PlayerRoot vào đây
+    public Transform target;
 
     [Header("Cấu hình các mốc Camera")]
     public CameraOffsetConfigByStackCount[] cameraConfigs; 
@@ -47,15 +47,13 @@ public class CameraFollow : MonoBehaviour
         }
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (target == null) return;
 
-        // 1. Tính toán vị trí đích đến của Camera
         Vector3 targetPosition = target.position + activeConfig.offset;
         Quaternion targetRotation = Quaternion.Euler(activeConfig.rotationOffset);
 
-        // 2. Di chuyển Camera siêu mượt bằng Lerp
         float smoothSpeed = 8f * Time.deltaTime;
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothSpeed);
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, smoothSpeed);

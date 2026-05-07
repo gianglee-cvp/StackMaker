@@ -14,7 +14,7 @@ public class GemObject : PoolObject
         if(other.CompareTag(GameConstant.PlayerTag))
         {
             GameManager.Instance.stackManager.HitGem() ;
-            gameObject.SetActive(false); // Vô hiệu hóa viên gem đã thu thập
+            gameObject.SetActive(false); 
         }
     }
 }

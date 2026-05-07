@@ -22,7 +22,6 @@ public partial class MapManager : MonoBehaviour
     {
         if (!config.ContainsKey(tileData.type))
         {
-            Debug.LogError($"No configuration found for MapGenTag: {tileData.type}");
             return;
         }
         TileConfig tileConfig = config[tileData.type];
