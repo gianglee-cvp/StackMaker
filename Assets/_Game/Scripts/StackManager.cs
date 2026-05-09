@@ -37,7 +37,6 @@ public class StackManager : MonoBehaviour
             stackList[lastIndex].gameObject.SetActive(false);
             stackList.RemoveAt(lastIndex);
         }
-        stackList.Clear();
         playerBody.localPosition = new Vector3(0 , GameConstant.PlayerBodyDefaultY , 0) ; 
         playerBody.localRotation = Quaternion.Euler(0 , GameConstant.PlayerBodyDefaultRotY , 0) ;
     }

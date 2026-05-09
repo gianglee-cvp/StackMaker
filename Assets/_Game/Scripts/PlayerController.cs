@@ -126,7 +126,6 @@ public class PlayerController : MonoBehaviour
             curMoveDirection = MoveDirection.None;
         }
         isSliding = false;
-        yield break;
 
     }
     public Vector3 SnapToGrid(Vector3 position)
