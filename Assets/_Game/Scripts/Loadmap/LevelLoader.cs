@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public class LevelLoader : MonoBehaviour
 {
-    public static LevelData LoadLevel(string jsonFileName)
+    public static LevelData LoadLevel(int levelNumber)
     {
-        string json = File.ReadAllText(jsonFileName);
+        string json = Resources.Load<TextAsset>($"Levels/Level{levelNumber}").text;
         LevelDataWrapper wrapper = JsonUtility.FromJson<LevelDataWrapper>(json);
         LevelData level = wrapper.level;
         return level ; 

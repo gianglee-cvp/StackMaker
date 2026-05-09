@@ -60,6 +60,6 @@ public partial class MapManager : MonoBehaviour
     }
 
     public void SetLevel(int level){
-        currentLevelData = LevelLoader.LoadLevel("Assets/_Game/StreamingAssets/Levels/level" + level + ".json");
+        currentLevelData = LevelLoader.LoadLevel(level);
     }
 }
