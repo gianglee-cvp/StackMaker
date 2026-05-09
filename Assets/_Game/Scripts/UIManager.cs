@@ -58,11 +58,11 @@ public class UIManager : MonoBehaviour
         {
             if(state == GameState.Playing)
             {
-                GameManager.Instance.IsUIShow = false; 
+                if(GameManager.Instance != null) GameManager.Instance.IsUIShow = false; 
             }
             else
             {
-                GameManager.Instance.IsUIShow = true; 
+                if(GameManager.Instance != null) GameManager.Instance.IsUIShow = true; 
             }
             if(uiPanels.ContainsKey(currentState))
             {

@@ -4,7 +4,7 @@ public class BridgeObject : PoolObject
 
 {
     public BoxCollider boxCollider ;
-    public GameObject bridgeColor ; 
+    [SerializeField] private GameObject bridgeColor ; 
 
     public override void OnDespawn()
     {
@@ -20,14 +20,14 @@ public class BridgeObject : PoolObject
     {
         if(other.CompareTag(GameConstant.PlayerTag))
         {
-            GameManager.Instance.stackManager.HitBridge(boxCollider) ;
+            if (GameManager.Instance != null && GameManager.Instance.stackManager != null) GameManager.Instance.stackManager.HitBridge() ;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if(other.CompareTag(GameConstant.PlayerTag))
         {
-            GameManager.Instance.stackManager.OnExitBridge(this) ;
+            if (GameManager.Instance != null && GameManager.Instance.stackManager != null) GameManager.Instance.stackManager.OnExitBridge(this) ;
         }
     }
 }

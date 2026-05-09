@@ -7,18 +7,18 @@ public class StackManager : MonoBehaviour
 
     [SerializeField] CameraFollow cameraFollow; 
     public static StackManager Instance;
-    public Transform stackHolder; // đối tượng cha chứa tất cả stack
-    public Transform playerBody  ; 
-    public float stackHeight = 0.3f ; 
-    public List<PoolObject> stackList = new List<PoolObject>();    
-    public int stackCount ; 
+    [SerializeField] private Transform stackHolder; // đối tượng cha chứa tất cả stack
+    [SerializeField] private Transform playerBody  ; 
+    [SerializeField] private float stackHeight = 0.3f ; 
+    private List<PoolObject> stackList = new List<PoolObject>();    
+    public int StackCount => stackList.Count; 
     public MoveDirection curMoveDirectionHitCorner = MoveDirection.None ; 
 
     [SerializeField] private Animator playerAnimator ;
     public void OnInit()
     {
             RemoveAllStack();
-            playerAnimator.SetInteger(GameConstant.PlayerAnim, 0); 
+            playerAnimator.SetInteger(GameConstant.PlayerAnim, GameConstant.AnimIdle); 
     }
     private void Awake()
     {
@@ -38,26 +38,24 @@ public class StackManager : MonoBehaviour
             stackList.RemoveAt(lastIndex);
         }
         stackList.Clear();
-        stackCount = 0 ;
-        playerBody.localPosition = new Vector3(0 , -0.3f , 0) ; 
-        playerBody.localRotation = Quaternion.Euler(0 , 90 , 0) ;
+        playerBody.localPosition = new Vector3(0 , GameConstant.PlayerBodyDefaultY , 0) ; 
+        playerBody.localRotation = Quaternion.Euler(0 , GameConstant.PlayerBodyDefaultRotY , 0) ;
     }
     public void AddStack( StackObject stackObject)
     {
-        stackList.Add(stackObject);
-
         stackObject.transform.SetParent(stackHolder);
-        stackObject.transform.localPosition = new Vector3(0 , stackHeight * stackCount - 0.5f , 0) ;  
+        stackObject.transform.localPosition = new Vector3(0 , stackHeight * StackCount + GameConstant.StackBaseYOffset , 0) ;  
         playerBody.localPosition += new Vector3(0 , stackHeight , 0) ;
-        stackCount++;
+        
+        stackList.Add(stackObject);
         stackObject.stackCollider.enabled = false;
         
-        cameraFollow.UpdateCameraMilestone(stackCount);
+        cameraFollow.UpdateCameraMilestone(StackCount);
     }
     public void HitCorner(CornerObject corner)
     {
         PlayerController.Instance.hitCorner = true;
-        playerAnimator.SetInteger(GameConstant.PlayerAnim , 1);  
+        playerAnimator.SetInteger(GameConstant.PlayerAnim , GameConstant.AnimRun);  
 
         if(PlayerController.Instance.curMoveDirection == MoveDirection.Up || PlayerController.Instance.curMoveDirection == MoveDirection.Down){
             curMoveDirectionHitCorner = corner.mustMoveHorizontal;
@@ -66,34 +64,33 @@ public class StackManager : MonoBehaviour
             curMoveDirectionHitCorner = corner.mustMoveVertical;
         }
     }
-    public void HitBridge(Collider other)
+    public void HitBridge()
     {
-        if(stackCount == 0) return ; 
-        stackList[stackCount - 1].gameObject.SetActive(false); 
-        stackList.RemoveAt(stackCount - 1);
-        stackCount--;
+        if(StackCount == 0) return ; 
+        stackList[StackCount - 1].gameObject.SetActive(false); 
+        stackList.RemoveAt(StackCount - 1);
 
         playerBody.localPosition -= new Vector3(0 , stackHeight , 0) ;
 
-        if(stackCount == 0)
+        if(StackCount == 0)
         {
-            GameManager.Instance.OnDeath(); 
+            if (GameManager.Instance != null) GameManager.Instance.OnDeath(); 
         }
 
-        cameraFollow.UpdateCameraMilestone(stackCount);
+        cameraFollow.UpdateCameraMilestone(StackCount);
 
     }
     public void OnHitWinPos(WinPosObject winPos)
     {
         PlayerController.Instance.hitWinPos = true;
 
-        GameManager.Instance.Point = stackCount; 
+        if(GameManager.Instance != null) GameManager.Instance.Point = StackCount; 
         winPos.PlayWinEffect(); 
         RemoveAllStack();
 
-        playerBody.localRotation = Quaternion.Euler(0 , -90f , 0) ; 
+        playerBody.localRotation = Quaternion.Euler(0 , GameConstant.WinPosRotationY , 0) ; 
         winPos.OpenTreasure(); // Mở rương kho báu       
-        playerAnimator.SetInteger(GameConstant.PlayerAnim , 2); 
+        playerAnimator.SetInteger(GameConstant.PlayerAnim , GameConstant.AnimWin); 
     }
     public void OnExitBridge(BridgeObject bridge)
     {
@@ -102,10 +99,10 @@ public class StackManager : MonoBehaviour
     }
     public void HitGem()
     {
-        GameManager.Instance.GemCount++; 
+        if(GameManager.Instance != null) GameManager.Instance.GemCount++; 
     }
     public void OnExitGem()
     {
-        playerAnimator.SetInteger(GameConstant.PlayerAnim , 0); 
+        playerAnimator.SetInteger(GameConstant.PlayerAnim , GameConstant.AnimIdle); 
     }
 }

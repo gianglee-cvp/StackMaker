@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
     private bool isSwiping = false;
     private void Update()
     {
-        if(GameManager.Instance.IsUIShow) return; // Nếu UI đang hiển thị, không xử lý input
+        if(GameManager.Instance != null && GameManager.Instance.IsUIShow) return; // Nếu UI đang hiển thị, không xử lý input
         if (Input.GetMouseButtonDown(0))
         {
             startTouchPosition = Input.mousePosition;

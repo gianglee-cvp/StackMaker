@@ -22,22 +22,23 @@ public partial class MapManager : MonoBehaviour
     {
         if (!config.ContainsKey(tileData.type))
         {
-            return;
+            return; 
         }
         TileConfig tileConfig = config[tileData.type];
+        Vector3 rotation = tileConfig.rotationOffset;
         if(tileData.type == MapGenTag.Corner)
         {
-            tileConfig.rotationOffset = new Vector3(0, (int)tileData.cornerDirection * 90f, 0);
+            rotation = new Vector3(0, (int)tileData.cornerDirection * GameConstant.CornerRotationStep, 0);
         }
         else if (tileData.type == MapGenTag.Bridge)
         {
-            tileConfig.rotationOffset = new Vector3(-90, 0, (int)tileData.bridgeDirection * 90f);
+            rotation = new Vector3(-90, 0, (int)tileData.bridgeDirection * GameConstant.CornerRotationStep);
         }
         PoolObject tileObject = ObjectPooler.Instance.SpawnFromPool(
             tileConfig.prefab,
             tileData.type,
             new Vector3(tileData.row, tileConfig.yOffset, tileData.column),
-            Quaternion.Euler(tileConfig.rotationOffset) , tileConfig.parent
+            Quaternion.Euler(rotation) , tileConfig.parent
         );
         if(!listObjectsActive.ContainsKey(tileData.type))
         {

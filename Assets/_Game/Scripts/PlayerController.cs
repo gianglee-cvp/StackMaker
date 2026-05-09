@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         }
         
         int distance = 0 ;
-        if(Physics.Raycast(detechWallPoint.position,dir, out RaycastHit hit, 50f , wallLayer)){
+        if(Physics.Raycast(detechWallPoint.position,dir, out RaycastHit hit, GameConstant.RaycastMaxDistance , wallLayer)){
             distance = Mathf.FloorToInt(Vector3.Distance(hit.point, detechWallPoint.position));
         }
         Vector3  targetPos = transform.position + dir * distance;
@@ -101,8 +101,8 @@ public class PlayerController : MonoBehaviour
     }
 
     private IEnumerator MoveToPosition(Vector3 targetPos){
-        while(Vector3.Distance(transform.position, targetPos) > 0.01f){
-            if(StackManager.Instance.stackCount == 0 && !hitWinPos) yield break; // Nếu không còn stack nào thì dừng coroutine để tránh lỗi khi player vẫn đang di chuyển nhưng đã hết stack
+        while(Vector3.Distance(transform.position, targetPos) > GameConstant.MoveStopThreshold){
+            if(StackManager.Instance.StackCount == 0 && !hitWinPos) yield break; // Nếu không còn stack nào thì dừng coroutine để tránh lỗi khi player vẫn đang di chuyển nhưng đã hết stack
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 targetPos,
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
         else if(hitWinPos)
         {
             curMoveDirection = MoveDirection.None; // Reset hướng để Update không gọi lại
-            GameManager.Instance.OnWin(); 
+            if (GameManager.Instance != null) GameManager.Instance.OnWin(); 
         }
         else
         {

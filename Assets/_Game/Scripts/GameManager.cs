@@ -12,9 +12,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ObjectPooler objectPooler;
     private DataManager dataManager = new DataManager();
 
-    public int currentLevel = 1;
-    public int maxLevel = 5; // level tối đa mà game có
-    public int maxPlayerLevel  ; // level tối đa mà player có thể chơi , phải vượt qua để mở khóa thêm 
+    private int currentLevel = 1;
+    [SerializeField] private int maxLevel = 5; // level tối đa mà game có
+    private int maxPlayerLevel  ; // level tối đa mà player có thể chơi , phải vượt qua để mở khóa thêm 
     public bool IsUIShow { get; set; }
     public int GemCount { get; set; }
 

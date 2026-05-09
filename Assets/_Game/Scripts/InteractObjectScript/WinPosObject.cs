@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class WinPosObject : PoolObject
 {
-    public GameObject closeTreasure;
-    public GameObject openTreasure;
+    [SerializeField] private GameObject closeTreasure;
+    [SerializeField] private GameObject openTreasure;
     [SerializeField] private ParticleSystem winEffect;
     public override void OnSpawn()
     {
@@ -31,7 +31,7 @@ public class WinPosObject : PoolObject
     {
         if(other.CompareTag(GameConstant.PlayerTag))
         {
-            GameManager.Instance.stackManager.OnHitWinPos(this) ; 
+            if (GameManager.Instance != null && GameManager.Instance.stackManager != null) GameManager.Instance.stackManager.OnHitWinPos(this) ; 
         }
     }
 

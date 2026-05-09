@@ -5,7 +5,7 @@ public class CornerObject : PoolObject
     public MoveDirection mustMoveHorizontal = MoveDirection.None ; 
     public MoveDirection mustMoveVertical = MoveDirection.None ; 
     [SerializeField] private Animator animator ;
-    public Collider cornerCollider ;
+    [SerializeField] private Collider cornerCollider ;
     private void OnEnable()
     {
         OnInit() ;
@@ -42,7 +42,7 @@ public class CornerObject : PoolObject
     {
         if(other.CompareTag(GameConstant.PlayerTag)){
             animator.SetInteger(GameConstant.CornerAinm , 0);
-            GameManager.Instance.stackManager.OnExitGem() ;
+            if (GameManager.Instance != null && GameManager.Instance.stackManager != null) GameManager.Instance.stackManager.OnExitGem() ;
         }
 
         

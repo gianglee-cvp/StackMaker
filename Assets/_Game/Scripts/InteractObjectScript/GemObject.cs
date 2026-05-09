@@ -5,7 +5,7 @@ public class GemObject : PoolObject
     {
         if(other.CompareTag(GameConstant.PlayerTag))
         {
-            GameManager.Instance.stackManager.HitGem() ;
+            if (GameManager.Instance != null && GameManager.Instance.stackManager != null) GameManager.Instance.stackManager.HitGem() ;
             gameObject.SetActive(false); 
         }
     }

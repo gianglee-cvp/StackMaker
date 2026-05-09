@@ -12,10 +12,10 @@ public struct CameraOffsetConfigByStackCount
 public class CameraFollow : MonoBehaviour
 {
 
-    public Transform target;
+    [SerializeField] private Transform target;
 
     [Header("Cấu hình các mốc Camera")]
-    public CameraOffsetConfigByStackCount[] cameraConfigs; 
+    [SerializeField] private CameraOffsetConfigByStackCount[] cameraConfigs; 
 
     private CameraOffsetConfigByStackCount activeConfig;
     float smoothSpeed = 8f;
